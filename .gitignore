@@ -33,5 +33,5 @@ go.work.sum
 .cursor/
 
 # story-engine specific excludes
-# apps/story-engine/data/runs/
-apps/story-engine/bin/storygen
+apps/story-engine/data/runs/
+apps/story-engine/bin/
