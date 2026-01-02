@@ -1,0 +1,325 @@
+# Story Engine
+
+A community-driven adventure storytelling platform that generates daily story chapters powered by AI and steered by audience engagement.
+
+## Overview
+
+Story Engine is an automated pipeline that runs daily to:
+
+1. **Gather community input** — Fetches comments from the latest Instagram post, sorted by likes
+2. **Filter story suggestions** — An AI agent extracts relevant story ideas from the comments
+3. **Plan the next chapter** — An AI agent plans the narrative arc, incorporating community suggestions
+4. **Write the chapter** — An AI agent writes prose (up to 2,100 characters for Instagram)
+5. **Generate hashtags** — An AI agent creates discovery-optimized hashtags
+6. **Create illustrations** — Generates consistent character art via FLUX Kontext
+7. **Notify you** — Sends an email with everything ready to post
+
+The result is a living, breathing story that the audience helps shape — like a D&D campaign where your followers are the players.
+
+## Inspiration
+
+- **Dungeons & Dragons** — Players suggest actions, the DM weaves them into a coherent narrative
+- **Choose Your Own Adventure** — Readers influence the story's direction
+- **Firewatch / The Stanley Parable** — Narrative-driven exploration with distinctive voice
+- **Minecraft** — Open-ended worlds where anything can happen
+
+## Architecture
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                         Daily Pipeline                              │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                     │
+│  Instagram ──▶ Comment    ──▶ Story     ──▶ Story    ──┬──▶ Hashtag │
+│  Comments      Filter         Planner       Writer     │   Generator│
+│                (Haiku)        (Sonnet+      (Sonnet)   │            │
+│                               Thinking)                │            │
+│                                                        └──▶ Image   │
+│                                                             Prompts │
+│                                                                     │
+│  ────────────────────────────────────────────────────────────────── │
+│                                 │                                   │
+│                                 ▼                                   │
+│                           FLUX Kontext                              │
+│                        (Image Generation)                           │
+│                                 │                                   │
+│                                 ▼                                   │
+│                          Email Report                               │
+│                        (Ready to Post)                              │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+## Tech Stack
+
+- **Language:** Go
+- **AI Models:** Claude Sonnet 4.5 (writing/planning), Claude Haiku (filtering)
+- **Image Generation:** FLUX Kontext via Black Forest Labs API
+- **Social Platform:** Instagram Graph API
+- **Deployment:** Home server with systemd
+
+## Project Structure
+
+```
+story-engine/
+├── cmd/
+│   └── storygen/
+│       └── main.go              # Application entrypoint
+├── internal/
+│   ├── agents/                  # AI agent implementations
+│   │   ├── client.go            # Anthropic API client
+│   │   ├── comment_filter.go    # Agent 1: Filter comments
+│   │   ├── story_planner.go     # Agent 2: Plan chapter
+│   │   ├── story_writer.go      # Agent 3: Write prose
+│   │   ├── hashtag_generator.go # Agent 4: Generate hashtags
+│   │   └── image_prompts.go     # Agent 5: Create image prompts
+│   ├── instagram/               # Instagram Graph API client
+│   ├── imagegen/                # FLUX Kontext integration
+│   ├── pipeline/                # Orchestration and checkpointing
+│   ├── storage/                 # File-based persistence
+│   ├── email/                   # Notification system
+│   └── scheduler/               # Cron scheduling
+├── pkg/
+│   └── models/                  # Shared data structures
+├── config/
+│   ├── pipeline.yaml            # Main configuration
+│   ├── prompts/                 # Agent system prompts
+│   └── templates/               # Email templates
+├── data/
+│   ├── story_bible.json         # Universe rules and context
+│   ├── entities/                # Character/location/object files
+│   │   ├── characters/
+│   │   ├── locations/
+│   │   └── objects/
+│   ├── archive/
+│   │   └── chapters/            # Generated chapter history
+│   └── runs/                    # Daily run outputs
+│       └── YYYY-MM-DD/
+│           ├── checkpoints/     # Pipeline recovery points
+│           ├── images/          # Generated illustrations
+│           └── logs/            # Execution logs
+├── scripts/
+│   ├── storygen.service         # systemd service file
+│   └── storygen.timer           # systemd timer file
+├── Makefile
+├── go.mod
+├── go.sum
+└── README.md
+```
+
+## Quick Start
+
+### Prerequisites
+
+- Go 1.21+
+- Anthropic API key
+- FLUX Kontext API key (via bfl.ml or Replicate)
+- Instagram Business/Creator account with Graph API access
+
+### Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/jamiesage/micro-saas-apps.git
+cd micro-saas-apps/story-engine
+
+# Install dependencies
+make install-deps
+
+# Copy example development configuration
+cp config/dev.env.example config/dev.env
+cp config/pipeline.example.yaml config/pipeline.yaml
+
+# Edit configuration with your API keys
+nano config/dev.env
+
+# Build
+make build
+```
+
+### Configuration
+
+Create a `.env` file with your API credentials:
+
+```bash
+ANTHROPIC_API_KEY=sk-ant-...
+FLUX_API_KEY=...
+INSTAGRAM_ACCESS_TOKEN=...
+SMTP_HOST=smtp.gmail.com
+SMTP_USER=you@gmail.com
+SMTP_PASSWORD=your-app-password
+NOTIFICATION_EMAIL=you@gmail.com
+```
+
+### Initialize Your Story
+
+```bash
+# Interactive story bible setup
+make init-new-story
+OR
+./bin/storygen init
+
+# This will prompt you for:
+# - Universe name and genre
+# - Initial premise
+# - Main characters
+# - Starting location
+# - Tone and style preferences
+```
+
+### Running
+
+```bash
+# Single run (for testing)
+run-dev # runs with dev config
+OR
+run-prod # runs with prod config
+OR
+./bin/storygen run
+
+# Dry run (no external API calls)
+run-dev-dry # runs with dev config
+OR
+./bin/storygen run --dry-run
+
+# Daemon mode (runs daily at configured time)
+run-prod-daemon # runs with prod config
+OR
+./bin/storygen daemon
+```
+
+## Pipeline Details
+
+### Agent 1: Comment Filter
+
+Reads Instagram comments and extracts story-relevant suggestions. Uses Claude Haiku for speed and cost efficiency. Categorizes suggestions as:
+
+- **Adopt** — Use in the next chapter
+- **Bank** — Save for future chapters
+- **Reject** — Not relevant to the story
+
+### Agent 2: Story Planner
+
+Plans the next chapter using extended thinking mode. Considers:
+
+- Story bible rules and constraints
+- Previous 10 chapters for continuity
+- Community suggestions from Agent 1
+- Character arcs and relationships
+- Upcoming milestones
+
+### Agent 3: Story Writer
+
+Writes the actual prose (max 2,100 characters for Instagram). Maintains consistent voice and tone. Automatically retries if output is too long or too short.
+
+### Agent 4: Hashtag Generator
+
+Creates 15-25 hashtags mixing broad reach tags (#fantasy, #storytelling) with niche discovery tags (#interactivefiction, #communitystory).
+
+### Agent 5: Image Prompt Generator
+
+Creates detailed prompts for FLUX Kontext including:
+
+- Consistent style anchors
+- Character reference descriptions
+- Scene and mood details
+
+## Entity Tracking
+
+The engine maintains files for every character, location, and object introduced in the story:
+
+```yaml
+# data/entities/characters/kira_ashford.yaml
+id: char_001
+name: Kira Ashford
+type: character
+one_liner: Disgraced knight protecting the child she was ordered to kill
+description: |
+  Tall woman in her mid-30s with short-cropped silver hair and a scar
+  running from her left temple to jaw. Wears battered steel armor with
+  the insignia scratched off.
+voice_note: Clipped military speech, avoids contractions
+image_ref: data/entities/characters/char_001/reference.png
+relationships:
+  - entity: char_002
+    type: protector
+    status: growing trust
+key_events:
+  - chapter: 3
+    event: Defected from the Crown Guard
+  - chapter: 7
+    event: Revealed her past to Marcus
+```
+
+This ensures characters behave consistently and appear the same in every illustration.
+
+## Deployment
+
+### systemd (Recommended)
+
+```bash
+# Copy service files
+sudo cp scripts/storygen.service /etc/systemd/system/
+sudo cp scripts/storygen.timer /etc/systemd/system/
+
+# Enable and start
+sudo systemctl enable storygen.timer
+sudo systemctl start storygen.timer
+
+# Check status
+sudo systemctl status storygen.timer
+journalctl -u storygen.service
+```
+
+### Manual Cron
+
+```bash
+# Run daily at 6 PM
+0 18 * * * /opt/storygen/bin/storygen run >> /var/log/storygen.log 2>&1
+```
+
+## Monitoring
+
+The engine integrates with [Healthchecks.io](https://healthchecks.io) for dead man's switch monitoring. Configure your ping URL in `pipeline.yaml`:
+
+```yaml
+monitoring:
+  healthchecks_url: https://hc-ping.com/your-uuid-here
+```
+
+You'll receive alerts if the daily run fails or doesn't execute.
+
+## Recovery
+
+If the pipeline fails mid-execution, it can resume from the last checkpoint:
+
+```bash
+# Resume today's failed run
+./bin/storygen run --resume
+
+# Resume a specific date's run
+./bin/storygen run --resume --date 2026-01-02
+```
+
+## Cost Estimates
+
+Running daily with 4 images per chapter:
+
+| Service | Monthly Cost |
+|---------|-------------|
+| Claude API (Sonnet + Haiku) | ~$5-10 |
+| FLUX Kontext (120 images) | ~$5-10 |
+| **Total** | **~$10-20/month** |
+
+## Contributing
+
+This is a personal project, but suggestions are welcome! Open an issue to discuss ideas.
+
+## License
+
+MIT License — see [LICENSE](LICENSE) for details.
+
+## Acknowledgments
+
+- [Anthropic](https://anthropic.com) for Claude
+- [Black Forest Labs](https://bfl.ml) for FLUX Kontext
+- The D&D community for decades of collaborative storytelling wisdom
