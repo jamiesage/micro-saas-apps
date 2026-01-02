@@ -169,23 +169,23 @@ OR
 ### Running
 
 ```bash
-# Single run (for testing)
-run-dev # runs with dev config
-OR
-run-prod # runs with prod config
-OR
+# Run the story engine once (using dev or prod env)
+make run-once
+# or directly
 ./bin/storygen run
 
-# Dry run (no external API calls)
-run-dev-dry # runs with dev config
-OR
+# Run a dry run (no external API calls)
+make run-dry
+# or directly
 ./bin/storygen run --dry-run
 
-# Daemon mode (runs daily at configured time)
-run-prod-daemon # runs with prod config
-OR
+# Run as a daily daemon (scheduled run, see config/pipeline.yaml)
+make run-daemon
+# or directly
 ./bin/storygen daemon
 ```
+
+_Note: You should run `make setup-dev` or `make setup-prod` before running for the first time to set up environment variables and dependencies as needed._
 
 ## Pipeline Details
 
@@ -316,7 +316,15 @@ This is a personal project, but suggestions are welcome! Open an issue to discus
 
 ## License
 
-MIT License — see [LICENSE](LICENSE) for details.
+This project is licensed under the **PolyForm Noncommercial License 1.0.0**.
+
+**You may** use, copy, modify, and distribute this software for any **non-commercial** purpose, including personal projects, research, education, and use by nonprofits.
+
+**You may not** use this software for commercial purposes without a separate license agreement.
+
+For commercial licensing inquiries, contact Jamie Sage at jamiesage01@gmail.com.
+
+See [LICENSE](LICENSE.md) for full terms.
 
 ## Acknowledgments
 
