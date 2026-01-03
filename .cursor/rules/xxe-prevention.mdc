@@ -1,4 +1,6 @@
 ---
+description: These rules apply to all code that parses or processes XML, regardless of language or framework, including AI-generated code.
+globs: 
 alwaysApply: false
 ---
 # XXE Prevention
