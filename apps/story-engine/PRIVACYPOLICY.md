@@ -39,7 +39,7 @@ Your comment data is processed by:
 | Service | Purpose | Their Privacy Policy |
 |---------|---------|---------------------|
 | Anthropic (Claude) | AI analysis of comments* | [anthropic.com/privacy](https://www.anthropic.com/privacy) |
-| Black Forest Labs (FLUX) | Image generation | [bfl.ml/privacy](https://bfl.ml/privacy) |
+| Black Forest Labs (FLUX) | Image generation | [https://bfl.ai/legal/privacy-policy](https://bfl.ai/legal/privacy-policy) |
 
 These services receive only your username and comment text — no other personal information.
 

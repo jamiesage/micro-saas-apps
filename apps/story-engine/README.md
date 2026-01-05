@@ -329,5 +329,5 @@ See [LICENSE](LICENSE.md) for full terms.
 ## Acknowledgments
 
 - [Anthropic](https://anthropic.com) for Claude
-- [Black Forest Labs](https://bfl.ml) for FLUX Kontext
+- [Black Forest Labs](https://bfl.ai) for FLUX Kontext
 - The D&D community for decades of collaborative storytelling wisdom
