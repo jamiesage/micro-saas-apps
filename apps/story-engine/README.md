@@ -1,4 +1,4 @@
-# Story Engine
+# Story Engine (brand name: Guild of the Amber Pen)
 
 A community-driven adventure storytelling platform that generates daily story chapters powered by AI and steered by audience engagement.
 
