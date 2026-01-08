@@ -3,9 +3,9 @@
 ## Changes
 Major changes with most recent changes at the top.
 
-### Repo init setup
+### P1-INFRA
 Version: 0.1
-Date: 8 Jan 2026
+Date: ongoing
 Change Categories: added
 Desc: initial setup of repo and documentation
 
