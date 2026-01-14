@@ -1,0 +1,275 @@
+# Story Engine Pipeline Configuration
+# ====================================
+# Sensitive values (API keys, tokens) should be set via environment variables,
+# not in this file. See dev.env.example for required environment variables.
+#
+# These values are loaded into config by config.go
+
+# ------------------------------------------------------------------------------
+# Anthropic / Claude API Configuration
+# ------------------------------------------------------------------------------
+anthropic:
+  # Model to use for complex tasks (planning, writing, image prompts)
+  # Options: claude-sonnet-4-5-20250929, claude-opus-4-5-20251101
+  primary_model: "claude-sonnet-4-5-20250929"
+  
+  # Model to use for simple tasks (filtering, hashtags)
+  # Options: claude-haiku-4-5-20251001
+  fast_model: "claude-haiku-4-5-20251001"
+  
+  # Maximum tokens for standard responses
+  max_tokens: 4096
+  
+  # Extended thinking configuration (used by Story Planner agent)
+  thinking:
+    enabled: true
+    budget_tokens: 10000  # Min: 1024, Max: 64000
+  
+  # Retry configuration for API calls
+  retry:
+    max_attempts: 3
+    initial_delay_ms: 1000
+    max_delay_ms: 10000
+    multiplier: 2.0
+
+# ------------------------------------------------------------------------------
+# Instagram Graph API Configuration
+# ------------------------------------------------------------------------------
+instagram:  
+  # Number of comments to fetch (max 100 per request, will paginate if needed)
+  comments_to_fetch: 100
+  
+  # Only consider comments with at least this many likes
+  min_likes_threshold: 0
+  
+  # How many top comments (by likes) to pass to the filter agent
+  top_comments_for_filtering: 50
+  
+  # Rate limiting
+  rate_limit:
+    requests_per_hour: 200
+    retry_after_seconds: 60
+
+# ------------------------------------------------------------------------------
+# Image Generation (FLUX Kontext) Configuration
+# ------------------------------------------------------------------------------
+image_generation:
+  # Provider: "bfl" (Black Forest Labs direct) or "replicate"
+  provider: "bfl"
+  
+  # Model variant: "kontext-pro" ($0.04/image) or "kontext-max" ($0.08/image)
+  model: "kontext-pro"
+  
+  # Number of images to generate per chapter (1-4)
+  images_per_chapter: 3
+  
+  # Image dimensions (FLUX supports various aspect ratios)
+  width: 1080
+  height: 1080
+  
+  # Generation parameters
+  guidance_scale: 7.5
+  num_inference_steps: 28
+  
+  # Style anchors to append to every prompt for consistency
+  # These ensure all generated images have a cohesive look
+  style_anchors:
+    - "digital illustration"
+    - "storybook art style"
+    - "bold clean lines"
+    - "soft cel shading"
+    - "warm color palette"
+    - "fantasy aesthetic"
+  
+  # Timeout for image generation (can take 30-60 seconds)
+  timeout_seconds: 120
+  
+  # Retry configuration
+  retry:
+    max_attempts: 2
+    delay_seconds: 5
+
+# ------------------------------------------------------------------------------
+# Email Notification Configuration
+# ------------------------------------------------------------------------------
+email:
+  # Enable/disable email notifications
+  enabled: true
+  
+  # Provider: "smtp" or "sendgrid"
+  provider: "smtp"
+  
+  # SMTP configuration (if provider is "smtp")
+  smtp:
+    host: "smtp.ionos.co.uk"
+    port: 587 # might need to be changed, see how was configured in phone outlook
+  
+  # SendGrid configuration (if provider is "sendgrid")
+  sendgrid:
+    from_name: "SendGrid Automation by Guild of the Amber Pen"
+  
+  # Notification recipients
+  # Note: recipient email addresses are loaded from environment variables
+  # See dev.env.example for EMAIL_RECIPIENT_DAILY_REPORT and EMAIL_RECIPIENT_ERROR_ALERTS
+  
+  # From address for outgoing emails
+  from_address: "jamie@guildoftheamberpen.com"
+
+  from_name: "Automation by Guild of the Amber Pen"
+
+# ------------------------------------------------------------------------------
+# Pipeline Execution Configuration
+# ------------------------------------------------------------------------------
+pipeline:
+  # Schedule (cron format) - only used in daemon mode
+  # Default: 6:00 PM daily
+  schedule: "0 18 * * *"
+  
+  # Timezone for schedule
+  timezone: "Europe/London"
+  
+  # Enable dry-run mode (no external API calls, no file writes)
+  dry_run: false
+  
+  # Story constraints
+  story:
+    # Maximum characters for Instagram post description
+    max_chapter_length: 2100
+    # Minimum acceptable chapter length
+    min_chapter_length: 1000
+    # Target chapter length (what we ask the AI to aim for)
+    target_chapter_length: 2000
+  
+  # Hashtag constraints
+  hashtags:
+    # Number of hashtags to generate
+    count_min: 5
+    count_max: 25
+    # Instagram allows up to 2200 chars, but hashtags shouldn't dominate
+    max_total_characters: 200
+  
+  # Context window management
+  context:
+    # Number of recent chapters to include in agent context
+    recent_chapters_count: 10
+    # Number of chapters to include with full text (rest are summarized)
+    full_text_chapters: 3
+    # Maximum entities to include in context
+    max_entities: 20
+  
+  # Validation settings
+  validation:
+    # Fail pipeline if chapter length is outside bounds
+    strict_length_check: true
+    # Number of retries if chapter length is wrong
+    length_retry_attempts: 2
+    # Run canon consistency check after generation
+    canon_check_enabled: true
+  
+  # Checkpointing
+  checkpoints:
+    enabled: true
+    # Keep checkpoints for this many days
+    retention_days: 30
+
+# ------------------------------------------------------------------------------
+# Agent-Specific Configuration
+# ------------------------------------------------------------------------------
+agents:
+  comment_filter:
+    # Model override (uses fast_model by default)
+    model: ""  # Empty means use default fast_model
+    # Maximum suggestions to select for next chapter
+    max_suggestions: 5
+    # Maximum ideas to bank for future
+    max_banked_ideas: 10
+  
+  story_planner:
+    # Model override (uses primary_model by default)
+    model: ""
+    # Enable extended thinking for this agent
+    use_thinking: true
+    thinking_budget: 10000
+  
+  story_writer:
+    model: ""
+    # Temperature for creative writing (0.0-1.0)
+    temperature: 0.8
+  
+  hashtag_generator:
+    model: ""  # Uses fast_model
+    # Include story-specific tags
+    include_story_tags: true
+    # Include genre tags
+    include_genre_tags: true
+    # Include general storytelling tags
+    include_general_tags: true
+  
+  image_prompt_generator:
+    model: ""  # Uses primary_model
+    # Include character reference descriptions
+    include_character_refs: true
+    # Maximum characters per image prompt
+    max_prompt_length: 500
+
+# ------------------------------------------------------------------------------
+# Storage / Paths Configuration
+# ------------------------------------------------------------------------------
+paths:
+  # Base data directory
+  # relative to working directory (where app runs from: apps/story-engine/)
+  data_dir: "./data"
+  
+  # Subdirectory structure (relative to data_dir)
+  story_bible: "story_bible.json"
+  entities_dir: "entities"
+  chapters_dir: "archive/chapters"
+  runs_dir: "runs"
+  
+  # Config subdirectories (relative to working directory)
+  prompts_dir: "./config/prompts"
+  templates_dir: "./config/templates"
+
+# ------------------------------------------------------------------------------
+# Monitoring Configuration
+# ------------------------------------------------------------------------------
+monitoring:
+  # Healthchecks.io integration
+  healthchecks:
+    enabled: false
+    # Timeout for health check pings
+    timeout_seconds: 10
+  
+  # Local HTTP health endpoint
+  http:
+    enabled: false
+    port: 8080
+    # Endpoints: /health/liveness, /health/readiness, /status
+  
+  # Cost tracking
+  cost_tracking:
+    enabled: true
+    # Alert if daily cost exceeds this amount (USD)
+    daily_alert_threshold: 5.00
+    # Log file for cost data
+    log_file: "metrics/costs.json"
+
+# ------------------------------------------------------------------------------
+# Logging Configuration
+# ------------------------------------------------------------------------------
+logging:
+  # Log level: debug, info, warn, error
+  level: "info"
+  
+  # Output format: "json" or "text"
+  format: "json"
+  
+  # Log to file in addition to stdout
+  file:
+    enabled: true
+    # Logs are written to {runs_dir}/{date}/logs/
+    # This controls the filename pattern
+    filename_pattern: "pipeline.log"
+  
+  # Include extended thinking output in logs (verbose, useful for debugging)
+  include_thinking: true

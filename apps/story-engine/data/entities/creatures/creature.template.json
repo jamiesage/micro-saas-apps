@@ -1,0 +1,427 @@
+{
+    "_template_note": "Remove this field when creating actual creatures",
+    "_pattern_note": "Fields with 'current' + 'evolution/history': overwrite current, append to evolution. Never delete history.",
+    "id": "crt_001",
+    "name": "Thornback",
+    "name_plural": "Thornbacks",
+    "type": "creature",
+    "creature_class": "named_individual",
+    "_creature_class_options": [
+        "named_individual (specific creature with identity)",
+        "fauna_type (animal species)",
+        "people_type (unnamed humans/humanoids as a group)",
+        "monster_type (threat creatures, supernatural or not)"
+    ],
+    "species": "wolf",
+    "one_liner": "A scarred grey wolf that chose to follow her—the question is why",
+    "_one_liner_note": "Overwrite as understanding evolves.",
+    "status": {
+        "current": "alive",
+        "current_condition": "Healthy. Still following at consistent distance.",
+        "history": [
+            {
+                "chapter": 4,
+                "status": "alive",
+                "note": "First sighting"
+            },
+            {
+                "chapter": 9,
+                "status": "alive",
+                "note": "Appeared during Hollow encounter—watching"
+            },
+            {
+                "chapter": 15,
+                "status": "alive",
+                "note": "Led her to correct path"
+            }
+        ]
+    },
+    "location": {
+        "current": {
+            "location_id": "loc_001",
+            "location_name": "The Thornwood",
+            "specific": "Following Mira at distance, eastern region"
+        },
+        "history": [
+            {
+                "chapter": 4,
+                "location": "loc_001",
+                "specific": "First seen at forest edge"
+            },
+            {
+                "chapter": 9,
+                "location": "loc_001",
+                "specific": "Appeared near Hollow encounter"
+            },
+            {
+                "chapter": 15,
+                "location": "loc_001",
+                "specific": "Ahead of Mira on correct path"
+            }
+        ]
+    },
+    "description": {
+        "_note": "Physical description mostly static. Note changes in status.history.",
+        "physical": "Large male wolf, greying at the muzzle. Coat is mottled grey and black, matted in places. A ridge of raised fur along the spine—old wound, healed badly. Moves with a slight hitch in the left rear leg.",
+        "presence": "You feel watched before you see him. He keeps distance—close enough to observe, far enough to vanish.",
+        "distinguishing_features": [
+            "Scarred ridge along spine (the 'thornback')",
+            "One ear torn, healed ragged",
+            "Eyes that track with uncomfortable intelligence"
+        ],
+        "size": "Large for a wolf—shoulder height near Mira's hip"
+    },
+    "sensory": {
+        "_note": "For writing consistency. Append new details as revealed.",
+        "sight": "Grey shape between trees, gone when you look directly. Yellow eyes catching firelight.",
+        "sound": "No howling. Occasional low chuff—almost a cough. Paws silent on pine needles.",
+        "smell": "Wet fur, blood (his or something else's), the cold smell of something wild",
+        "texture_if_touched": "Unknown—she hasn't touched him. Coarse outer coat visible."
+    },
+    "behavior": {
+        "current": {
+            "baseline": "Follows at distance. Appears at key moments. Neither approaches nor flees.",
+            "patterns": [
+                "Appears at dusk, gone by full dark",
+                "Closer when Mira is alone, distant when others present",
+                "Has appeared on correct path twice when she was lost",
+                "Watched the Hollow encounter but didn't intervene"
+            ],
+            "triggers": {
+                "friendly_when": "She shows respect. She asks permission. She has something to trade.",
+                "hostile_when": "She takes without asking. She damages the forest. She brings fire.",
+                "helpful_when": "Rarely. If she's running from something they also hate.",
+                "ignore_when": "She passes through quickly and takes nothing. They'll watch but not engage.",
+            },
+            "intelligence_level": "Unnervingly high. Seems to understand intent, not just action.",
+            "predictability": "Consistent rules, but the rules aren't fully known."
+        },
+        "evolution": [
+            {
+                "chapter": 4,
+                "behavior": "Distant observation. Following, not engaging.",
+                "note": "Establishing pattern"
+            },
+            {
+                "chapter": 9,
+                "behavior": "Appeared during danger but didn't intervene",
+                "note": "Will he help? Won't he?"
+            },
+            {
+                "chapter": 15,
+                "behavior": "Appeared ahead on correct path—first active 'help'",
+                "note": "Shifted from observer to... guide?"
+            }
+        ],
+        "triggers": {
+            "current": {
+                "approaches_when": "She's lost or in danger (but not immediate combat)",
+                "flees_when": "Direct pursuit, fire, loud confrontation",
+                "aids_when": "She's truly lost—appears on correct path",
+                "attacks_when": "Unknown—hasn't yet"
+            },
+            "evolution": [
+                {
+                    "chapter": 15,
+                    "added_trigger": "aids_when lost",
+                    "note": "First confirmed helpful behavior"
+                }
+            ]
+        }
+    },
+    "people_culture": {
+        "_note": "If the creature is a people_type, this section is required. Otherwise, leave blank.",
+        "beliefs": [
+            "The forest is alive. Not metaphor—literal. It decides who lives.",
+            "The old maps were a violation. Mapping something claims it. The forest burned them for a reason.",
+            "Outsiders carry a sickness—ambition, greed, the need to own."
+        ],
+        "taboos": [
+            "Fire larger than a cooking flame",
+            "Marking trees (including blazing trails)",
+            "Speaking the names of the dead",
+            "Metal weapons (they believe metal 'screams' to the forest)"
+        ],
+        "customs": [
+            "Offer something before taking anything—even a fallen branch",
+            "Three warnings before violence: a sound, a sight, a touch",
+            "Debts must be paid. No exceptions. No forgetting."
+        ],
+        "language": "They speak the common tongue, but older. Formal. Third person for strangers.",
+        "attitude_toward_outsiders": "Suspicion, not hatred. Outsiders are lost by nature. Sometimes worth helping. Usually not."
+    },
+    "people_speech_patterns": {
+        "_note": "If the creature is a people_type, this section is required. Otherwise, leave blank.",
+        "vocabulary": "Archaic, formal. 'The traveler' not 'you.' Nature metaphors.",
+        "tone": "Flat, unhurried. They don't raise their voices.",
+        "verbal_tics": [
+            "Begin statements with 'The forest says...' or 'It is known that...'",
+            "Never use contractions",
+            "Questions are statements with rising inflection"
+        ],
+        "example_dialogue": [
+            "The traveler walks loudly. The forest hears.",
+            "This one has seen the signs the traveler seeks. What does the traveler offer?",
+            "The debt is owed. The forest remembers when the traveler does not."
+        ]
+    },
+    "lore": {
+        "origin": "Unknown. Some say 'Thorn' was a warlord who marched an army in and never marched it out.",
+        "what_people_believe": [
+            "Don't run. Thornbacks chase what runs.",
+            "Speak to them. Thornbacks were people once.",
+            "If you know their name, they might let you pass.",
+            "If you don't know their name, give them yours. They'll remember someone."
+        ],
+        "what_might_be_true": "They're drawn to people like they were. Lost. Searching. Alone.",
+        "connection_to_history": "Some say the forest is full of them since The Burning—all those cartographers who fled into the woods and never came out.",
+        "habitat": {
+            "where_found": "Deep Thornwood only. Never at edges, never in clearings.",
+            "density": "Unknown. You see one at a time. There might be hundreds.",
+            "environmental_signs": "Silence. Temperature drop. Birds stop. That's when you look around.",
+            "time_of_activity": "Dusk, dawn, fog. Not full dark (the forest has different dangers then)."
+        }
+    },
+    "encounter_design": {
+        "frequency": "Rare. Maximum twice per arc. Overuse diminishes fear.",
+        "best_used_for": [
+            "Forcing difficult choices (go around, losing days, or try to pass)",
+            "Revealing world lore through interaction",
+            "Moments of genuine dread"
+        ],
+        "resolution_options": [
+            "Wait and show respect—slow but safe",
+            "Speak to them, find the right words—risky but faster",
+            "Find what they're looking for and give it—costly",
+            "Run—almost always fatal"
+        ],
+        "never_use_for": [
+            "Action sequences (they don't fight, they take)",
+            "Comedy",
+            "Casual background (they're always significant)"
+        ]
+    },
+    "relationship_to_characters": [
+        {
+            "character_id": "char_001",
+            "character_name": "Mira",
+            "current": {
+                "relationship": "mysterious_guardian",
+                "her_awareness": "Knows he's following. Has stopped trying to chase him off.",
+                "her_feelings": "Unsettled but no longer afraid. Beginning to wonder if he's protecting her.",
+                "dynamic": "Uneasy acceptance. She acknowledges him now, nods when she sees him."
+            },
+            "evolution": [
+                {
+                    "chapter": 4,
+                    "relationship": "unknown_threat",
+                    "her_feelings": "Fear. Being hunted?",
+                    "dynamic": "Tried to lose him"
+                },
+                {
+                    "chapter": 9,
+                    "relationship": "confusing_observer",
+                    "her_feelings": "Confusion. Why didn't he attack during the Hollow encounter?",
+                    "dynamic": "Wary coexistence"
+                },
+                {
+                    "chapter": 15,
+                    "relationship": "mysterious_guardian",
+                    "her_feelings": "Cautious hope. Is he helping?",
+                    "dynamic": "She nodded to him. First acknowledgment.",
+                    "trigger": "He appeared on correct path"
+                }
+            ]
+        },
+        {
+            "character_id": "char_003",
+            "character_name": "Brennan Thorne",
+            "current": {
+                "relationship": "possible_connection",
+                "status": "unconfirmed",
+                "speculation": "Did Brennan befriend this wolf? Is he waiting for Brennan's return?"
+            },
+            "evolution": [
+                {
+                    "chapter": 9,
+                    "speculation_added": "Why does he follow a human? Did he follow one before?",
+                    "note": "Mira wonders but doesn't know"
+                }
+            ]
+        }
+    ],
+    "notable_individuals": {
+        "_note": "If the creature is not a named_individual, this section is required. Otherwise, leave blank.",
+        "notable_individuals": [
+            {
+                "name": "The Thornback",
+                "description": "A large male wolf with a scarred back. Known to follow Mira.",
+                "note": "If this individual becomes important, promote to full character entity"
+            }
+        ]
+    },
+    "mysteries": {
+        "unanswered_questions": {
+            "current": [
+                "Why is he following her?",
+                "Did he know Brennan?",
+                "Is he natural or something else?",
+                "Why does he help when she's lost?",
+                "What does he want?"
+            ],
+            "evolution": [
+                {
+                    "chapter": 4,
+                    "questions": [
+                        "Why is he following?",
+                        "Is he hunting her?"
+                    ]
+                },
+                {
+                    "chapter": 9,
+                    "added": "Is he natural or something else?",
+                    "trigger": "Intelligence during Hollow encounter"
+                },
+                {
+                    "chapter": 15,
+                    "added": "Why does he help?",
+                    "trigger": "Path guidance"
+                }
+            ]
+        },
+        "clues_revealed": [
+            {
+                "chapter": 9,
+                "clue": "Watched the Hollow encounter but didn't interfere—knows forest dangers",
+                "implication": "He's been here long. Understands the threats."
+            },
+            {
+                "chapter": 15,
+                "clue": "Appeared on correct path when she was lost",
+                "implication": "Actively helping, not just watching"
+            }
+        ],
+        "clues_planned": [
+            {
+                "target_chapter": "25-28",
+                "clue": "Brennan's journal mentions a wolf with a scarred back",
+                "implication": "Connection to brother confirmed"
+            }
+        ]
+    },
+    "narrative_function": {
+        "current": {
+            "role": "mystery_ally",
+            "_role_options": [
+                "companion",
+                "obstacle",
+                "threat",
+                "mystery",
+                "mystery_ally",
+                "environment",
+                "symbol"
+            ],
+            "story_purpose": "Embodies the question: is the wild hostile or protective? Mirrors Mira's isolation—another solitary creature.",
+            "creates_tension_by": "Intent unclear. Could be safety or threat.",
+            "theme_connection": "Trust. Wildness. Choosing to follow vs. being followed.",
+            "how_to_use": [
+                "Blocking passage until a debt is paid",
+                "Offering information in exchange for something costly",
+                "Warning about dangers ahead—but not explaining why"
+            ]
+        },
+        "evolution": [
+            {
+                "chapter": 4,
+                "role": "mystery",
+                "purpose": "Unknown threat"
+            },
+            {
+                "chapter": 9,
+                "role": "mystery",
+                "purpose": "Confusing presence"
+            },
+            {
+                "chapter": 15,
+                "role": "mystery_ally",
+                "purpose": "Possible guardian",
+                "trigger": "Active help"
+            }
+        ],
+        "potential_arc": "May be connection to Brennan. Could become true ally if trust is established."
+    },
+    "threat_assessment": {
+        "current": {
+            "danger_level": "low_currently",
+            "_level_options": [
+                "none",
+                "environmental",
+                "low_currently",
+                "moderate",
+                "high",
+                "lethal"
+            ],
+            "could_kill": true,
+            "would_kill": "Unknown—hasn't shown aggression toward her",
+            "notes": "Physically capable of killing. Has chosen not to."
+        },
+        "evolution": [
+            {
+                "chapter": 4,
+                "danger_level": "moderate",
+                "note": "Unknown predator following"
+            },
+            {
+                "chapter": 9,
+                "danger_level": "low_currently",
+                "note": "No aggression shown"
+            },
+            {
+                "chapter": 15,
+                "danger_level": "low_currently",
+                "note": "Actively helpful"
+            }
+        ],
+        "vulnerabilities": "Unknown. Fire, probably. Direct confrontation—he avoids it.",
+        "if_hostile": "Fast, strong, knows the terrain. Hard to escape, impossible to outfight."
+    },
+    "writing_notes": {
+        "when_to_feature": "Moments of isolation, decision points, when Mira is most alone. Transitions at dusk.",
+        "sensory_anchor": "Yellow eyes catching light. Always at the edge of vision. The silence around him.",
+        "avoid": "Don't make him cute or pet-like. He's wild. Keep the mystery.",
+        "voice_if_any": "None. Communicate through action, position, what he does and doesn't do.",
+        "perspective_rule": "Never show his POV. Keep him external, observed."
+    },
+    "visual": {
+        "_note": "Stable for image consistency.",
+        "palette": "Greys, black, muted. Yellow eyes the only bright point.",
+        "mood": "Watchful, wild, patient",
+        "signature_elements": [
+            "Raised scar ridge along spine",
+            "Torn ear",
+            "Distance—always at edge of frame",
+            "Yellow eyes"
+        ],
+        "reference_images": [
+            "data/entities/creatures/crt_001/reference_01.png"
+        ]
+    },
+    "key_appearances": [
+        {
+            "chapter": 4,
+            "event": "First sighting—Mira thinks she's being hunted"
+        },
+        {
+            "chapter": 9,
+            "event": "Watches Hollow encounter but doesn't intervene"
+        },
+        {
+            "chapter": 15,
+            "event": "Appears on correct path when she's lost"
+        }
+    ],
+    "created_in_chapter": 4,
+    "last_appearance_chapter": 15,
+    "created_at": "2026-01-15T10:00:00Z",
+    "updated_at": "2026-01-16T18:00:00Z"
+}
