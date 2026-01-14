@@ -308,8 +308,12 @@ func Load(configPath string) (*Config, error) {
 		}
 	}
 
-	// Required monitoring
-	cfg.Monitoring.Healthchecks.PingURL = requireEnv("HEALTHCHECKS_PING_URL", &envErrs)
+	// monitoring - require if enabled
+	if cfg.Monitoring.Healthchecks.Enabled {
+		cfg.Monitoring.Healthchecks.PingURL = requireEnv("HEALTHCHECKS_PING_URL", &envErrs)
+	} else {
+		cfg.Monitoring.Healthchecks.PingURL = optionalEnv("HEALTHCHECKS_PING_URL")
+	}
 
 	// Check for environment variable errors
 	if len(envErrs) > 0 {
@@ -335,6 +339,7 @@ func (c *Config) Validate() error {
 	errs = append(errs, c.validateImageGeneration()...)
 	errs = append(errs, c.validateEmail()...)
 	errs = append(errs, c.validatePipeline()...)
+	errs = append(errs, c.validateAgents()...)
 	errs = append(errs, c.validatePaths()...)
 	errs = append(errs, c.validateMonitoring()...)
 	errs = append(errs, c.validateLogging()...)
@@ -453,6 +458,10 @@ func (c *Config) validateImageGeneration() []string {
 
 	if c.ImageGeneration.NumInferenceSteps <= 0 {
 		errs = append(errs, "image_generation.num_inference_steps must be greater than 0")
+	}
+
+	if len(c.ImageGeneration.StyleAnchors) == 0 {
+		errs = append(errs, "image_generation.style_anchors should have at least one anchor for consistency")
 	}
 
 	if c.ImageGeneration.TimeoutSeconds <= 0 {
@@ -668,6 +677,56 @@ func (c *Config) validateLogging() []string {
 
 	if c.Logging.File.Enabled && c.Logging.File.FilenamePattern == "" {
 		errs = append(errs, "logging.file.filename_pattern is required when file logging is enabled")
+	}
+
+	return errs
+}
+
+// validateAgents validates agent-specific configurations.
+func (c *Config) validateAgents() []string {
+	var errs []string
+
+	errs = append(errs, c.validateAgentConfig("comment_filter", &c.Agents.CommentFilter)...)
+	errs = append(errs, c.validateAgentConfig("story_planner", &c.Agents.StoryPlanner)...)
+	errs = append(errs, c.validateAgentConfig("story_writer", &c.Agents.StoryWriter)...)
+	errs = append(errs, c.validateAgentConfig("hashtag_generator", &c.Agents.HashtagGenerator)...)
+	errs = append(errs, c.validateAgentConfig("image_prompt_generator", &c.Agents.ImagePromptGenerator)...)
+
+	return errs
+}
+
+// validateAgentConfig validates a single agent configuration.
+func (c *Config) validateAgentConfig(agentName string, agent *AgentConfig) []string {
+	var errs []string
+
+	// Validate thinking budget if thinking is enabled
+	if agent.UseThinking {
+		if agent.ThinkingBudget < 1024 {
+			errs = append(errs, fmt.Sprintf("agents.%s.thinking_budget must be at least 1024 when use_thinking is enabled", agentName))
+		}
+		if agent.ThinkingBudget > 64000 {
+			errs = append(errs, fmt.Sprintf("agents.%s.thinking_budget must not exceed 64000", agentName))
+		}
+	}
+
+	// Validate temperature range (0.0 to 1.0)
+	if agent.Temperature < 0.0 || agent.Temperature > 1.0 {
+		errs = append(errs, fmt.Sprintf("agents.%s.temperature must be between 0.0 and 1.0", agentName))
+	}
+
+	// Validate max_suggestions (negative values are invalid)
+	if agent.MaxSuggestions < 0 {
+		errs = append(errs, fmt.Sprintf("agents.%s.max_suggestions must not be negative", agentName))
+	}
+
+	// Validate max_banked_ideas (negative values are invalid)
+	if agent.MaxBankedIdeas < 0 {
+		errs = append(errs, fmt.Sprintf("agents.%s.max_banked_ideas must not be negative", agentName))
+	}
+
+	// Validate max_prompt_length (negative values are invalid)
+	if agent.MaxPromptLength < 0 {
+		errs = append(errs, fmt.Sprintf("agents.%s.max_prompt_length must not be negative", agentName))
 	}
 
 	return errs
