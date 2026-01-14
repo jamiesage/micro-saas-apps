@@ -1,0 +1,269 @@
+{
+    "_description": "Current world state - where all mobile entities are RIGHT NOW. Updated after each chapter.",
+    "meta": {
+        "as_of_chapter": 16,
+        "last_updated": "2026-01-16T18:00:00Z"
+    },
+    "character_positions": [
+        {
+            "entity_id": "char_001",
+            "name": "Mira Thorne",
+            "current_location": {
+                "location_id": "loc_001",
+                "location_name": "The Thornwood",
+                "sub_location": "Eastern region, near ancient standing stones",
+                "coordinates_approx": {
+                    "x": 3.5,
+                    "y": 0.2
+                },
+                "terrain": "dense_forest"
+            },
+            "movement_status": "stationary",
+            "movement_note": "Camped for the night after finding Kael's letter",
+            "heading": "east",
+            "destination": "loc_003",
+            "eta_chapters": 2,
+            "last_moved_chapter": 15,
+            "entered_current_location_chapter": 3
+        },
+        {
+            "entity_id": "char_002",
+            "name": "Kael Vorn",
+            "current_location": {
+                "location_id": "loc_001",
+                "location_name": "The Thornwood",
+                "sub_location": "Unknown - somewhere in the forest",
+                "coordinates_approx": {
+                    "x": 3.0,
+                    "y": -0.5
+                },
+                "coordinates_confidence": "low",
+                "terrain": "dense_forest"
+            },
+            "movement_status": "unknown",
+            "movement_note": "Disappeared chapter 12. Still in forest? Fled? Watching?",
+            "heading": "unknown",
+            "last_confirmed_chapter": 12,
+            "entered_current_location_chapter": 5
+        },
+        {
+            "entity_id": "char_003",
+            "name": "Brennan Thorne",
+            "current_location": {
+                "location_id": "unknown",
+                "location_name": "Unknown",
+                "sub_location": "Last known: heading toward loc_006 (Hidden Vale)",
+                "coordinates_approx": null,
+                "coordinates_confidence": "none"
+            },
+            "movement_status": "unknown",
+            "movement_note": "Missing for 2 years. Destination was the Hidden Vale.",
+            "last_confirmed_chapter": null,
+            "narrative_note": "His location IS the mystery"
+        }
+    ],
+    "creature_positions": [
+        {
+            "entity_id": "crt_001",
+            "name": "Thornback",
+            "creature_class": "named_individual",
+            "current_location": {
+                "location_id": "loc_001",
+                "location_name": "The Thornwood",
+                "sub_location": "Following Mira at distance, eastern region",
+                "coordinates_approx": {
+                    "x": 3.4,
+                    "y": 0.3
+                },
+                "relative_to": "char_001",
+                "distance": "100-200 meters, parallel course"
+            },
+            "movement_status": "following",
+            "following": "char_001",
+            "last_seen_chapter": 15
+        },
+        {
+            "entity_id": "crt_002",
+            "name": "Hollows",
+            "creature_class": "monster_type",
+            "current_location": {
+                "location_id": "loc_001",
+                "location_name": "The Thornwood",
+                "sub_location": "Throughout deep forest, concentrated away from edges",
+                "distribution": "scattered"
+            },
+            "movement_status": "territorial",
+            "movement_note": "Don't leave the Thornwood. More common in center and east.",
+            "territory": [
+                "loc_001"
+            ]
+        },
+        {
+            "entity_id": "crt_003",
+            "name": "Thornwood Keepers",
+            "creature_class": "people_type",
+            "current_location": {
+                "location_id": "loc_005",
+                "location_name": "Keeper Settlement",
+                "sub_location": "Primary settlement, scouts throughout forest",
+                "distribution": "settlement_and_patrols"
+            },
+            "movement_status": "territorial",
+            "territory": [
+                "loc_001",
+                "loc_005"
+            ],
+            "last_interaction_chapter": 11
+        }
+    ],
+    "object_positions": [
+        {
+            "entity_id": "obj_001",
+            "name": "The Burned Map",
+            "position_type": "carried",
+            "carrier_id": "char_001",
+            "carrier_name": "Mira Thorne",
+            "specific_location": "In her satchel, oiled leather sleeve",
+            "with_character_since_chapter": 1
+        },
+        {
+            "entity_id": "obj_002",
+            "name": "Kael's Letter",
+            "position_type": "carried",
+            "carrier_id": "char_001",
+            "carrier_name": "Mira Thorne",
+            "specific_location": "In her pocket",
+            "acquired_chapter": 16,
+            "previous_location": "Hidden in Kael's tent"
+        },
+        {
+            "entity_id": "obj_003",
+            "name": "Brennan's Knife",
+            "position_type": "carried",
+            "carrier_id": "char_001",
+            "carrier_name": "Mira Thorne",
+            "specific_location": "At her belt",
+            "with_character_since_chapter": 1
+        },
+        {
+            "entity_id": "obj_005",
+            "name": "Surveyor's Compass",
+            "position_type": "given_away",
+            "current_holder_id": "crt_003",
+            "current_holder_name": "Thornwood Keepers",
+            "transfer_chapter": 11,
+            "transfer_note": "Traded for information about the path ahead"
+        }
+    ],
+    "recent_movements": [
+        {
+            "chapter": 16,
+            "entity_id": "char_001",
+            "event": "Moved to Kael's abandoned camp, searched tent, found letter",
+            "from": {
+                "x": 3.4,
+                "y": 0.1
+            },
+            "to": {
+                "x": 3.5,
+                "y": 0.2
+            }
+        },
+        {
+            "chapter": 15,
+            "entity_id": "char_001",
+            "event": "Lost, then found correct path (Thornback appeared ahead)",
+            "from": {
+                "x": 3.2,
+                "y": -0.3
+            },
+            "to": {
+                "x": 3.4,
+                "y": 0.1
+            }
+        },
+        {
+            "chapter": 12,
+            "entity_id": "char_002",
+            "event": "Last confirmed position before disappearance",
+            "from": {
+                "x": 3.0,
+                "y": 0.0
+            },
+            "to": "unknown"
+        }
+    ],
+    "location_occupancy": {
+        "_note": "Quick lookup: who is in each location right now?",
+        "loc_001": {
+            "characters": [
+                "char_001",
+                "char_002?"
+            ],
+            "creatures": [
+                "crt_001",
+                "crt_002",
+                "crt_003"
+            ],
+            "objects": [
+                "obj_001",
+                "obj_002",
+                "obj_003"
+            ],
+            "notes": "Kael's presence uncertain"
+        },
+        "loc_002": {
+            "characters": [],
+            "creatures": [],
+            "objects": [],
+            "notes": "Empty of story entities currently"
+        },
+        "loc_005": {
+            "characters": [],
+            "creatures": [
+                "crt_003"
+            ],
+            "objects": [
+                "obj_005"
+            ],
+            "notes": "Keepers have the compass"
+        }
+    },
+    "proximity_alerts": [
+        {
+            "entities": [
+                "char_001",
+                "char_002"
+            ],
+            "status": "nearby_uncertain",
+            "distance_estimate": "Unknown - Kael could be close or fled",
+            "narrative_tension": "high",
+            "note": "She has his letter. He doesn't know she knows. Are they about to meet?"
+        },
+        {
+            "entities": [
+                "char_001",
+                "crt_001"
+            ],
+            "status": "parallel_movement",
+            "distance_estimate": "100-200 meters",
+            "narrative_tension": "low_positive",
+            "note": "Thornback following as usual"
+        }
+    ],
+    "travel_in_progress": [
+        {
+            "entity_id": "char_001",
+            "route": "conn_002",
+            "from": "loc_001",
+            "to": "loc_003",
+            "started_chapter": 3,
+            "progress_percent": 80,
+            "estimated_arrival_chapter": 18,
+            "complications": [
+                "Kael situation may delay",
+                "Hollows more frequent ahead"
+            ]
+        }
+    ]
+}

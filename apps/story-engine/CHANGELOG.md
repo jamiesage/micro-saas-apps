@@ -5,7 +5,7 @@ Major changes with most recent changes at the top.
 
 ### P1-INFRA
 Version: 0.1
-Date: ongoing
+Date: unreleased
 Change Categories: added
 Desc: initial setup of repo and documentation
 

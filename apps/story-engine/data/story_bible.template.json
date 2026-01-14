@@ -1,0 +1,500 @@
+{
+    "_template_note": "Remove this field when creating your actual story bible",
+    "meta": {
+        "story_title": "The Cartographer's Silence",
+        "tagline": "Some places don't want to be found. She's looking anyway.",
+        "genre": [
+            "fantasy",
+            "adventure",
+            "mystery"
+        ],
+        "tone": [
+            "literary",
+            "atmospheric",
+            "character-driven"
+        ],
+        "target_length": "ongoing_serial",
+        "chapter_format": {
+            "max_characters": 2100,
+            "min_characters": 1800,
+            "target_characters": 2000
+        },
+        "created_at": "2026-01-15T10:00:00Z",
+        "last_updated": "2026-01-15T10:00:00Z"
+    },
+    "universe": {
+        "name": "The Uncharted Lands",
+        "era": "Post-collapse of a great kingdom, roughly equivalent to late medieval",
+        "geography_overview": "Coastal regions give way to dense forests, then mountains. Beyond the mountains: unknown. Maps conflict. Expeditions don't return.",
+        "rules": {
+            "magic_exists": true,
+            "magic_system": "Subtle, environmental. The land itself holds power. No fireballs—more like places that bend probability, objects that hold memory, paths that change.",
+            "technology_level": "Pre-industrial. Sailing ships, forged steel, no printing press. Maps are rare and valuable.",
+            "communication": "Messages travel by rider or ship. News is slow, rumors faster.",
+            "religion": "Fragmented. Old gods associated with landscape features. The devout are rare but intense.",
+            "government": "Fallen kingdom left power vacuums. Regional lords, merchant councils, lawless stretches."
+        },
+        "world_philosophy": {
+            "what_the_land_knows": "The land remembers everything and forgives nothing. It doesn't judge—it simply is. Those who respect it may pass. Those who don't, won't.",
+            "what_the_world_believes": "Some places exist that shouldn't. Some paths lead to more than destinations. The old maps were burned for a reason.",
+            "how_nature_mirrors_theme": {
+                "harsh_terrain": "External obstacles mirror internal ones",
+                "hidden_paths": "Truth is there but must be sought",
+                "changing_weather": "Emotional states made visible",
+                "ancient_ruins": "The past is never fully gone"
+            }
+        },
+        "history": {
+            "major_eras": [
+                {
+                    "name": "The Mapped Kingdom",
+                    "when": "200+ years ago",
+                    "summary": "A great kingdom that charted everything. Fell suddenly. Records burned or hidden."
+                },
+                {
+                    "name": "The Burning",
+                    "when": "Approximately 200 years ago",
+                    "summary": "Maps, records, and cartographers systematically destroyed. Why remains unknown."
+                },
+                {
+                    "name": "The Forgetting",
+                    "when": "Since The Burning",
+                    "summary": "Knowledge lost. Terrain that was mapped became unmapped. Some places... changed."
+                }
+            ],
+            "details_to_seed": [
+                "Charred stones surface after heavy rain—ruins of the old archive",
+                "Rusted surveying equipment found in unexpected places",
+                "Place names that no longer match what's there",
+                "Standing stones with the same symbol—older than the kingdom"
+            ]
+        }
+    },
+    "premise": {
+        "setup": "Mira Thorne's brother Brennan disappeared two years ago, following their dead father's half-burned map to a place that may not exist. She's been tracking his trail ever since.",
+        "inciting_incident": "She finds the first real clue—a symbol on her father's map matches ancient stones in the Thornwood. Someone else is following her.",
+        "central_question": "Where did her brother go, and what did he find?",
+        "stakes": {
+            "personal": "Losing her last family connection. Becoming lost herself.",
+            "world": "Whatever was hidden may be hidden for a reason. Finding it could change things."
+        }
+    },
+    "themes": {
+        "primary": "The cost of searching for something versus the cost of giving up",
+        "secondary": [
+            "Inheritance—what we're given, what we choose",
+            "Maps and territory—the difference between knowing and understanding",
+            "Isolation as protection versus isolation as prison"
+        ],
+        "questions_to_explore": [
+            "Can you find what you're looking for and still recognize yourself?",
+            "What do we owe the dead?",
+            "Is some knowledge better left lost?"
+        ],
+        "avoid": [
+            "Simple good versus evil",
+            "Chosen one narratives",
+            "Romantic subplot as primary driver"
+        ]
+    },
+    "narrative_craft": {
+        "future_shadow": {
+            "description": "A known endpoint that colors all preceding scenes—the reader knows something is coming",
+            "current_shadow": "The prologue hints that Mira will find her brother, but not alive. Everything is colored by this inevitability.",
+            "established_in_chapter": 0,
+            "resolution_target": "chapter_30_to_35",
+            "how_to_use": "Reference obliquely in moments of hope. Let dramatic irony build."
+        },
+        "central_tensions": [
+            {
+                "tension": "Hope versus evidence",
+                "manifestation": "Every clue could mean he's alive or confirm he's dead"
+            },
+            {
+                "tension": "Trust versus survival",
+                "manifestation": "She needs allies but can't afford betrayal"
+            },
+            {
+                "tension": "Finding versus becoming lost",
+                "manifestation": "The search changes her—is she still who he'd recognize?"
+            }
+        ],
+        "negative_space_patterns": {
+            "violence": "Show aftermath, not acts. Bruises not blows.",
+            "grief": "Show what's avoided, not felt. The room not entered.",
+            "betrayal": "Discovery of evidence, not witnessed acts.",
+            "love": "Show what's protected, not declared."
+        },
+        "backstory_distribution": {
+            "method": "Accumulation across chapters, never dumps",
+            "triggers": {
+                "memory_flash": "Sensory trigger → one sentence of past",
+                "dialogue": "Another character references past",
+                "object": "Item carries history into scene",
+                "location": "Place evokes what happened there"
+            },
+            "backstory_revealed": [
+                {
+                    "chapter": 3,
+                    "content": "Workshop fire, father's death",
+                    "method": "memory_flash",
+                    "trigger": "Smell of smoke"
+                },
+                {
+                    "chapter": 7,
+                    "content": "Brother taught her knife work",
+                    "method": "object",
+                    "trigger": "The knife itself"
+                }
+            ],
+            "backstory_planned": [
+                {
+                    "target_chapter": 20,
+                    "content": "Why father kept the map secret",
+                    "method": "dialogue",
+                    "trigger": "Someone who knew him"
+                }
+            ]
+        },
+        "silence_tracking": {
+            "technique": "Character doesn't say something important—we learn what they would have said",
+            "usage_rule": "Once every 3-4 chapters maximum",
+            "last_used_chapter": 14,
+            "instances": [
+                {
+                    "chapter": 6,
+                    "character": "Mira",
+                    "what_she_didnt_say": "Why she was really following Kael",
+                    "cost": "He never knew she suspected him from the start"
+                },
+                {
+                    "chapter": 14,
+                    "character": "Mira",
+                    "what_she_didnt_say": "That she'd found his letter",
+                    "cost": "Lost the chance to hear his explanation"
+                }
+            ]
+        },
+        "question_threading": {
+            "active_questions": [
+                {
+                    "question": "Where did Brennan go?",
+                    "raised_chapter": 1,
+                    "status": "active",
+                    "clues_given": [
+                        5,
+                        8,
+                        14
+                    ],
+                    "target_answer_chapter": "28-32"
+                },
+                {
+                    "question": "What does the symbol mean?",
+                    "raised_chapter": 1,
+                    "status": "active",
+                    "clues_given": [
+                        14
+                    ],
+                    "target_answer_chapter": "22-25"
+                },
+                {
+                    "question": "Who is Kael really working for?",
+                    "raised_chapter": 12,
+                    "status": "partially_answered",
+                    "clues_given": [
+                        16
+                    ],
+                    "target_answer_chapter": "18-20"
+                }
+            ],
+            "resolved_questions": [],
+            "banked_questions": [
+                {
+                    "question": "What really caused The Burning?",
+                    "source": "community suggestion",
+                    "planned_raise_chapter": 25
+                }
+            ]
+        },
+        "opening_approach_rotation": {
+            "default": "medium_to_close",
+            "wide_opening_frequency": "Every 4-5 chapters for breathing room",
+            "last_wide_opening": 12,
+            "next_wide_opening_due": "16-17"
+        }
+    },
+    "tone_guide": {
+        "voice": {
+            "perspective": "Close third person, Mira's POV",
+            "tense": "Past",
+            "vocabulary": "Grounded, physical, specific. Technical for terrain/navigation. Spare with abstractions.",
+            "sentence_style": "Varied rhythm. Long flowing sentences for atmosphere, short punches for impact."
+        },
+        "emotional_register": {
+            "baseline": "Quiet tension. Something always slightly wrong.",
+            "humor": "Rare, dry, situational. Never jokes—wry observations.",
+            "darkness": "Earned, not gratuitous. Violence in negative space.",
+            "hope": "Present but fragile. Easily broken."
+        },
+        "influences": [
+            {
+                "work": "Where the Crawdads Sing",
+                "take": "Setting as character, sensory specificity, body-not-label emotions"
+            },
+            {
+                "work": "Firewatch",
+                "take": "Isolation, mystery in landscape, conversation-driven character"
+            },
+            {
+                "work": "The Stanley Parable",
+                "take": "Narrator awareness, paths not taken, quiet humor"
+            }
+        ],
+        "style_anchors_for_images": [
+            "digital illustration",
+            "storybook art style",
+            "bold clean lines",
+            "soft cel shading",
+            "muted earth tones with occasional vivid accent",
+            "atmospheric lighting"
+        ]
+    },
+    "current_arc": {
+        "arc_name": "The Thornwood Crossing",
+        "arc_number": 1,
+        "chapters": "1-20",
+        "arc_question": "Can Mira cross the Thornwood and reach the mountains?",
+        "arc_stakes": "Kael's betrayal revealed. Trust broken. Must go on alone.",
+        "arc_climax_target": "Chapter 18-20",
+        "status": {
+            "current_chapter": 16,
+            "current_location": "Deep Thornwood, approaching eastern edge",
+            "immediate_situation": "Mira has discovered Kael's betrayal. He doesn't know she knows.",
+            "immediate_tension": "Confront him or use the knowledge?"
+        }
+    },
+    "planned_arcs": [
+        {
+            "arc_name": "The Mountain Pass",
+            "arc_number": 2,
+            "chapters": "21-35",
+            "arc_question": "What's on the other side of the mountains?",
+            "notes": "Introduce new character—someone who knew Brennan"
+        },
+        {
+            "arc_name": "The Hidden Place",
+            "arc_number": 3,
+            "chapters": "36-50",
+            "arc_question": "What did Brennan find? Why didn't he come back?",
+            "notes": "Climax of the search. Answer the premise."
+        }
+    ],
+    "milestones": {
+        "upcoming": [
+            {
+                "milestone": "Mira confronts Kael",
+                "target_chapter": "17-18",
+                "significance": "First direct conflict with betrayer"
+            },
+            {
+                "milestone": "Exit Thornwood",
+                "target_chapter": "20",
+                "significance": "Arc 1 complete"
+            },
+            {
+                "milestone": "First real clue about Brennan's fate",
+                "target_chapter": "25",
+                "significance": "Midpoint turn—changes the search"
+            }
+        ],
+        "achieved": [
+            {
+                "milestone": "Accepted a traveling companion",
+                "chapter": 5
+            },
+            {
+                "milestone": "Found matching symbol",
+                "chapter": 14
+            },
+            {
+                "milestone": "Discovered betrayal",
+                "chapter": 16
+            }
+        ]
+    },
+    "community_integration": {
+        "adopted_suggestions": [
+            {
+                "username": "@fantasyfan42",
+                "suggestion": "Someone should betray the group",
+                "implemented_chapter": 16,
+                "how_used": "Kael revealed as spy via discovered letter"
+            }
+        ],
+        "banked_suggestions": [
+            {
+                "username": "@dragon_lover",
+                "suggestion": "Can we meet a dragon?",
+                "banked_chapter": 10,
+                "planned_use": "Arc 2 or 3—something in the mountains",
+                "notes": "Not a traditional dragon. Something ancient, more force of nature than creature."
+            },
+            {
+                "username": "@mystery_maven",
+                "suggestion": "What if Brennan is still alive but doesn't want to be found?",
+                "banked_chapter": 12,
+                "planned_use": "This might be the truth. Hold for reveal.",
+                "notes": "Community independently guessing the ending—good sign"
+            }
+        ],
+        "rejected_suggestions": [
+            {
+                "username": "@action_hero",
+                "suggestion": "Mira should get superpowers",
+                "rejected_chapter": 8,
+                "reason": "Doesn't fit magic system or tone"
+            }
+        ]
+    },
+    "constraints": {
+        "never_do": [
+            "Magic as problem-solver (magic complicates, doesn't resolve)",
+            "Resurrection or undoing death",
+            "Breaking POV discipline",
+            "Romantic subplot dominating narrative",
+            "Explaining mysteries fully (some things stay unknown)"
+        ],
+        "always_do": [
+            "Environment reflects emotional state",
+            "One historical/lore seed per chapter",
+            "Body-not-label for emotions",
+            "Strong verbs over adverbs",
+            "Sensory details that do double duty"
+        ]
+    },
+    "entity_index": {
+        "characters": [
+            {
+                "id": "char_001",
+                "name": "Mira Thorne",
+                "status": "alive",
+                "role": "protagonist"
+            },
+            {
+                "id": "char_002",
+                "name": "Kael Vorn",
+                "status": "alive",
+                "role": "antagonist_ally"
+            },
+            {
+                "id": "char_003",
+                "name": "Brennan Thorne",
+                "status": "missing",
+                "role": "absent_goal"
+            }
+        ],
+        "locations": [
+            {
+                "id": "loc_001",
+                "name": "The Thornwood",
+                "status": "active"
+            },
+            {
+                "id": "loc_002",
+                "name": "Gallows Crossing",
+                "status": "passed"
+            },
+            {
+                "id": "loc_003",
+                "name": "Eastern Thornwood Edge",
+                "status": "undiscovered"
+            },
+            {
+                "id": "loc_004",
+                "name": "The Mountain Pass",
+                "status": "undiscovered"
+            },
+            {
+                "id": "loc_005",
+                "name": "Keeper Settlement",
+                "status": "discovered"
+            },
+            {
+                "id": "loc_006",
+                "name": "The Hidden Vale",
+                "status": "undiscovered"
+            }
+        ],
+        "objects": [
+            {
+                "id": "obj_001",
+                "name": "The Burned Map",
+                "status": "with_mira"
+            },
+            {
+                "id": "obj_002",
+                "name": "Kael's Letter",
+                "status": "with_mira"
+            },
+            {
+                "id": "obj_003",
+                "name": "Brennan's Knife",
+                "status": "with_mira"
+            },
+            {
+                "id": "obj_005",
+                "name": "Surveyor's Compass",
+                "status": "with_keepers"
+            }
+        ],
+        "creatures": [
+            {
+                "id": "crt_001",
+                "name": "Thornback",
+                "class": "named_individual",
+                "status": "active"
+            },
+            {
+                "id": "crt_002",
+                "name": "Hollows",
+                "class": "monster_type",
+                "status": "active"
+            },
+            {
+                "id": "crt_003",
+                "name": "Thornwood Keepers",
+                "class": "people_type",
+                "status": "active"
+            }
+        ]
+    },
+    "world_tracking": {
+        "_note": "Geographic and position tracking in separate files",
+        "topology_file": "data/world_map.json",
+        "state_file": "data/world_state.json",
+        "current_geographic_context": {
+            "primary_location": "loc_001 (The Thornwood)",
+            "protagonist_position": "Eastern region, ~80% through crossing",
+            "destination": "loc_003 (Eastern Thornwood Edge) → loc_004 (Mountain Pass) → loc_006 (Hidden Vale)",
+            "time_to_forest_edge": "~2 chapters",
+            "time_to_mountains": "~5 chapters"
+        },
+        "spatial_tensions": [
+            {
+                "tension": "Kael's unknown position",
+                "description": "He disappeared chapter 12. Still in forest? Fled? Watching?",
+                "narrative_use": "Could appear anytime for confrontation"
+            },
+            {
+                "tension": "Approaching forest edge",
+                "description": "Thornwood ends soon. New terrain, new dangers.",
+                "narrative_use": "Transition point—arc 1 ending"
+            },
+            {
+                "tension": "Thornback's following distance",
+                "description": "Closer when she's alone, distant when others present",
+                "narrative_use": "If Kael appears, Thornback may react"
+            }
+        ]
+    }
+}

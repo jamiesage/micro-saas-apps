@@ -1,0 +1,329 @@
+{
+    "_template_note": "Remove this field when creating actual objects",
+    "_pattern_note": "Fields with 'current' + 'evolution/history': overwrite current, append to evolution. Never delete history.",
+    "id": "obj_001",
+    "name": "The Burned Map",
+    "type": "object",
+    "category": "artifact",
+    "one_liner": "Her brother's last map—half destroyed, the half that remains might be worse",
+    "_one_liner_note": "Overwrite as understanding of object evolves.",
+    "status": {
+        "current": "intact",
+        "current_condition": "Fragile but whole. Handled too often at the folds.",
+        "history": [
+            {
+                "chapter": 1,
+                "status": "intact",
+                "note": "Introduced"
+            },
+            {
+                "chapter": 11,
+                "status": "at_risk",
+                "note": "Nearly lost to river crossing"
+            },
+            {
+                "chapter": 14,
+                "status": "intact",
+                "note": "Secured in oiled sleeve"
+            }
+        ]
+    },
+    "location": {
+        "current": {
+            "type": "carried",
+            "carrier_id": "char_001",
+            "carrier_name": "Mira Thorne",
+            "specific": "In her satchel, oiled leather sleeve"
+        },
+        "history": [
+            {
+                "chapter": 1,
+                "type": "carried",
+                "carrier": "char_001",
+                "note": "With Mira from start"
+            },
+            {
+                "chapter": 7,
+                "type": "hidden",
+                "location": "char_001's camp",
+                "note": "Buried while she scouted"
+            },
+            {
+                "chapter": 8,
+                "type": "observed",
+                "by": "char_002",
+                "note": "Kael glimpsed it—first sign of his interest"
+            }
+        ]
+    },
+    "description": {
+        "_note": "Physical description mostly static. Note changes in status.history.",
+        "physical": "A large parchment, folded into quarters, edges charred black. The left half is illegible—burned in the workshop fire. The right half shows coastline, mountains, and a path leading to a symbol she doesn't recognize. The ink is her father's. The annotations are her brother's.",
+        "condition_details": "Brittle at the edges. Soft where worn from handling. Kept in an oiled leather sleeve.",
+        "distinguishing_features": [
+            "Burn marks follow a diagonal—fire moved corner to corner",
+            "Brother's handwriting in margins: coordinates, dates, question marks",
+            "A symbol at the path's end: circle with three lines through it"
+        ]
+    },
+    "sensory": {
+        "_note": "Relatively stable. Append if new sensory details revealed.",
+        "sight": "Yellowed parchment, black char, faded brown ink that was once deep red",
+        "touch": "Brittle at the edges, soft where worn from handling",
+        "smell": "Old smoke that never quite faded, leather from the sleeve, something faintly metallic",
+        "sound": "Crinkles dangerously when unfolded—she holds her breath each time"
+    },
+    "significance": {
+        "current": {
+            "practical_function": "Map to an unknown location—her only lead to her brother",
+            "emotional_weight": "Last physical connection to father and brother. Proof the fire didn't take everything. Now also proof her father had secrets.",
+            "symbolic_meaning": "The past half-destroyed, the future unclear. Family secrets that burn but don't die.",
+            "narrative_role": "macguffin_and_mirror"
+        },
+        "evolution": [
+            {
+                "chapter": 1,
+                "significance": {
+                    "practical": "Her only lead",
+                    "emotional": "Connection to lost family",
+                    "symbolic": "Incomplete knowledge"
+                },
+                "note": "Initial understanding"
+            },
+            {
+                "chapter": 14,
+                "significance": {
+                    "practical": "Symbol matches standing stones—lead is real",
+                    "emotional": "Father knew more than he said",
+                    "symbolic": "Secrets passed down, incompletely"
+                },
+                "trigger": "Symbol discovery changed meaning"
+            }
+        ]
+    },
+    "mysteries": {
+        "unanswered_questions": {
+            "current": [
+                "What location does the map show?",
+                "What does the symbol mean?",
+                "Why did her father keep it hidden?",
+                "Did her brother find what he was looking for?",
+                "Who else knows about this map?"
+            ],
+            "evolution": [
+                {
+                    "chapter": 1,
+                    "questions": [
+                        "What location does the map show?",
+                        "What does the symbol mean?",
+                        "Why did her father keep it hidden?",
+                        "Did her brother find what he was looking for?"
+                    ]
+                },
+                {
+                    "chapter": 8,
+                    "added": "Who else knows about this map?",
+                    "trigger": "Kael's interest noticed"
+                }
+            ]
+        },
+        "clues_revealed": [
+            {
+                "chapter": 14,
+                "clue": "Symbol matches ancient standing stones in the Thornwood",
+                "implication": "The destination is real, not myth"
+            }
+        ],
+        "clues_planned": [
+            {
+                "target_chapter": "22-24",
+                "clue": "The coastline matches a location thought to be myth",
+                "implication": "The old cartographers mapped something that was then erased"
+            }
+        ]
+    },
+    "known_history": {
+        "_note": "Append as history is revealed. Never delete.",
+        "origin": "Created by her father, annotated by her brother before his disappearance",
+        "age": "Map itself is 15+ years old. Brother's annotations are 2 years old.",
+        "revealed_history": [
+            {
+                "fact": "Pulled from the workshop fire when Mira was 12",
+                "revealed_chapter": 3,
+                "how_revealed": "memory_flash"
+            },
+            {
+                "fact": "Brother took it when he left, she found it in his empty room",
+                "revealed_chapter": 1,
+                "how_revealed": "narration"
+            },
+            {
+                "fact": "Father kept it hidden even from family",
+                "revealed_chapter": 7,
+                "how_revealed": "dialogue"
+            }
+        ],
+        "unrevealed_history": [
+            {
+                "fact": "Father received it from someone else—he didn't make it",
+                "planned_reveal_chapter": "22-25",
+                "reveal_method": "discovered letter"
+            }
+        ],
+        "previous_owners": [
+            {
+                "owner": "Unknown original cartographer",
+                "period": "Unknown",
+                "relationship_to_object": "Created it. Why?",
+                "revealed_chapter": null
+            },
+            {
+                "owner": "Aldric Thorne (father)",
+                "period": "Until workshop fire",
+                "relationship_to_object": "His secret project—never explained",
+                "revealed_chapter": 7
+            },
+            {
+                "owner": "Brennan Thorne (brother)",
+                "period": "After father's death until disappearance",
+                "relationship_to_object": "Obsession. Covered it in notes. Followed it somewhere.",
+                "revealed_chapter": 1
+            },
+            {
+                "owner": "Mira Thorne",
+                "period": "Current",
+                "relationship_to_object": "Only lead. Sacred object.",
+                "revealed_chapter": 1
+            }
+        ]
+    },
+    "character_relationships": [
+        {
+            "character_id": "char_001",
+            "character_name": "Mira Thorne",
+            "current": {
+                "relationship": "owner",
+                "emotional_connection": "Talisman. Proof of purpose. Evidence of family secrets.",
+                "how_they_handle_it": "Carefully, reverently. Unfolds it only when alone. More protective since Kael's betrayal.",
+                "what_it_means_to_them": "Everything she's lost and everything she's looking for"
+            },
+            "evolution": [
+                {
+                    "chapter": 1,
+                    "relationship": "owner",
+                    "emotional_connection": "Talisman. Proof of purpose.",
+                    "how_they_handle_it": "Carefully, reverently. Unfolds it only when alone."
+                },
+                {
+                    "chapter": 14,
+                    "emotional_connection": "Talisman. Proof of purpose. Evidence of family secrets.",
+                    "trigger": "Symbol discovery implied father knew more"
+                },
+                {
+                    "chapter": 16,
+                    "how_they_handle_it": "More protective since Kael's betrayal—trusts no one to see it",
+                    "trigger": "Betrayal increased protectiveness"
+                }
+            ]
+        },
+        {
+            "character_id": "char_002",
+            "character_name": "Kael Vorn",
+            "current": {
+                "relationship": "covets",
+                "emotional_connection": "Mission objective—sent to acquire it or its information",
+                "knowledge_of_object": "Has seen it, memorized what he could. Doesn't have it.",
+                "threat_level": "high"
+            },
+            "evolution": [
+                {
+                    "chapter": 8,
+                    "relationship": "curious",
+                    "event": "Glimpsed it, asked about it casually"
+                },
+                {
+                    "chapter": 12,
+                    "relationship": "covets",
+                    "event": "His disappearance—was he reporting about it?"
+                },
+                {
+                    "chapter": 16,
+                    "relationship": "covets",
+                    "event": "Letter confirms he was sent for information about it"
+                }
+            ]
+        }
+    ],
+    "story_function": {
+        "current": {
+            "drives_plot_by": "Everything Mira does is to follow where this map leads",
+            "creates_tension_by": "Others want it. The destination may be dangerous. Father's secrets may hurt.",
+            "reveals_character_by": "How carefully she protects it shows her desperation and love",
+            "connects_to_theme": "Inheritance—what we're given, what we choose. Incomplete knowledge."
+        },
+        "evolution": [
+            {
+                "chapter": 1,
+                "function": "Quest object—destination unknown",
+                "theme_connection": "The cost of searching"
+            },
+            {
+                "chapter": 14,
+                "function": "Quest object—destination might be real",
+                "theme_connection": "Family secrets passed down"
+            }
+        ]
+    },
+    "object_personality": {
+        "_note": "For writing guidance. How should this object 'feel' in scenes?",
+        "if_it_could_speak": "I've survived fire. I've outlasted the ones who made me. I won't give up my secrets easily.",
+        "what_it_represents": "Inheritance—burdens passed down, incomplete",
+        "mood_it_evokes": "Melancholy determination. The ache of almost-knowing.",
+        "how_it_should_feel_in_scenes": "Heavy with meaning. When it appears, stakes rise."
+    },
+    "writing_notes": {
+        "when_to_feature": "Moments of doubt, decision points, when Mira needs to remember why",
+        "sensory_anchor": "Always mention the smell of old smoke when she unfolds it",
+        "avoid": "Don't let it become furniture—every appearance should matter",
+        "pairs_well_with": "Firelight (echoes origin), quiet moments (she won't unfold it if watched)"
+    },
+    "visual": {
+        "_note": "Stable for image consistency.",
+        "palette": "Yellowed parchment, black char, brown ink, dark leather sleeve",
+        "mood": "Weathered, fragile, precious",
+        "signature_elements": [
+            "Burned diagonal edge",
+            "Dense margin annotations",
+            "Unknown symbol at path's end"
+        ],
+        "reference_images": [
+            "data/entities/objects/obj_001/reference_01.png"
+        ]
+    },
+    "key_appearances": [
+        {
+            "chapter": 1,
+            "event": "Introduced—Mira consults it at Thornwood edge"
+        },
+        {
+            "chapter": 7,
+            "event": "She reveals its history to Kael"
+        },
+        {
+            "chapter": 8,
+            "event": "Kael glimpses it—first sign of interest"
+        },
+        {
+            "chapter": 11,
+            "event": "Nearly lost in river crossing"
+        },
+        {
+            "chapter": 14,
+            "event": "Symbol matches standing stone—first real confirmation"
+        }
+    ],
+    "created_in_chapter": 1,
+    "last_featured_chapter": 14,
+    "created_at": "2026-01-15T10:00:00Z",
+    "updated_at": "2026-01-16T18:00:00Z"
+}

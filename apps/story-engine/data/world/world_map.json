@@ -1,0 +1,317 @@
+{
+    "_description": "World topology - locations and their connections. Source of truth for geography.",
+    "meta": {
+        "world_name": "The Uncharted Lands",
+        "coordinate_system": "Relative grid. Each unit ≈ 1 day travel on clear terrain.",
+        "origin_note": "Gallows Crossing (loc_002) is the anchor point at (0, 0).",
+        "last_updated": "2026-01-16T18:00:00Z"
+    },
+    "regions": [
+        {
+            "id": "reg_001",
+            "name": "Western Reaches",
+            "description": "Settled lands, scattered villages, trade roads",
+            "terrain_type": "mixed_settled",
+            "locations": [
+                "loc_002"
+            ],
+            "bounds": {
+                "x_min": -5,
+                "x_max": 0,
+                "y_min": -3,
+                "y_max": 3
+            }
+        },
+        {
+            "id": "reg_002",
+            "name": "The Thornwood",
+            "description": "Dense ancient forest, hostile to outsiders",
+            "terrain_type": "dense_forest",
+            "locations": [
+                "loc_001",
+                "loc_003",
+                "loc_005"
+            ],
+            "bounds": {
+                "x_min": 0,
+                "x_max": 4,
+                "y_min": -2,
+                "y_max": 2
+            }
+        },
+        {
+            "id": "reg_003",
+            "name": "The Eastern Mountains",
+            "description": "Unexplored peaks, rumored passes",
+            "terrain_type": "mountains",
+            "locations": [
+                "loc_004",
+                "loc_006"
+            ],
+            "bounds": {
+                "x_min": 4,
+                "x_max": 8,
+                "y_min": -2,
+                "y_max": 3
+            }
+        }
+    ],
+    "locations": [
+        {
+            "id": "loc_002",
+            "name": "Gallows Crossing",
+            "type": "settlement",
+            "position": {
+                "x": 0,
+                "y": 0
+            },
+            "elevation": 0,
+            "terrain": "town",
+            "discovered": true,
+            "discovered_chapter": 1,
+            "notes": "Last settlement before the Thornwood. Trade post, supplies available."
+        },
+        {
+            "id": "loc_001",
+            "name": "The Thornwood",
+            "type": "wilderness",
+            "position": {
+                "x": 2,
+                "y": 0
+            },
+            "position_note": "Large area - position marks center. Spans x:0.5 to x:4, y:-2 to y:2",
+            "elevation": 1,
+            "terrain": "dense_forest",
+            "discovered": true,
+            "discovered_chapter": 3,
+            "traversable": true,
+            "traversal_modifier": 0.3,
+            "traversal_note": "0.3 = takes ~3x longer than open terrain"
+        },
+        {
+            "id": "loc_003",
+            "name": "Eastern Thornwood Edge",
+            "type": "landmark",
+            "position": {
+                "x": 4,
+                "y": 0
+            },
+            "elevation": 2,
+            "terrain": "forest_edge",
+            "discovered": false,
+            "discovered_chapter": null,
+            "notes": "Where the forest ends and mountains begin. Mira approaching."
+        },
+        {
+            "id": "loc_004",
+            "name": "The Mountain Pass",
+            "type": "route",
+            "position": {
+                "x": 5,
+                "y": 1
+            },
+            "elevation": 4,
+            "terrain": "mountain_pass",
+            "discovered": false,
+            "discovered_chapter": null,
+            "notes": "Only known route through the eastern mountains. On the map."
+        },
+        {
+            "id": "loc_005",
+            "name": "Keeper Settlement",
+            "type": "settlement",
+            "position": {
+                "x": 2,
+                "y": 1
+            },
+            "position_note": "Approximate. Keepers move it or hide it.",
+            "elevation": 1,
+            "terrain": "hidden_settlement",
+            "discovered": true,
+            "discovered_chapter": 6,
+            "access": "conditional",
+            "access_note": "Only reachable if Keepers allow it"
+        },
+        {
+            "id": "loc_006",
+            "name": "The Hidden Vale",
+            "type": "landmark",
+            "position": {
+                "x": 7,
+                "y": 0
+            },
+            "elevation": 3,
+            "terrain": "mountain_valley",
+            "discovered": false,
+            "discovered_chapter": null,
+            "notes": "The destination on the burned map. May or may not exist.",
+            "on_map": true,
+            "map_object": "obj_001"
+        }
+    ],
+    "connections": [
+        {
+            "id": "conn_001",
+            "from": "loc_002",
+            "to": "loc_001",
+            "from_name": "Gallows Crossing",
+            "to_name": "The Thornwood",
+            "type": "road_to_trail",
+            "bidirectional": true,
+            "distance_days": 0.5,
+            "terrain_difficulty": "easy_to_moderate",
+            "status": "open",
+            "notes": "Clear road becomes trail at forest edge",
+            "discovered_chapter": 1
+        },
+        {
+            "id": "conn_002",
+            "from": "loc_001",
+            "to": "loc_003",
+            "from_name": "The Thornwood",
+            "to_name": "Eastern Thornwood Edge",
+            "type": "forest_path",
+            "bidirectional": true,
+            "distance_days": 14,
+            "distance_note": "Two weeks through hostile forest",
+            "terrain_difficulty": "dangerous",
+            "status": "dangerous",
+            "hazards": [
+                "Hollows",
+                "Misleading paths",
+                "Keepers if disrespected"
+            ],
+            "discovered_chapter": 3,
+            "traversal_progress": {
+                "character": "char_001",
+                "started_chapter": 3,
+                "current_progress": 0.8,
+                "estimated_arrival_chapter": 18
+            }
+        },
+        {
+            "id": "conn_003",
+            "from": "loc_003",
+            "to": "loc_004",
+            "from_name": "Eastern Thornwood Edge",
+            "to_name": "The Mountain Pass",
+            "type": "mountain_trail",
+            "bidirectional": true,
+            "distance_days": 3,
+            "terrain_difficulty": "hard",
+            "status": "unknown",
+            "discovered_chapter": null,
+            "notes": "Exists on map. Not yet reached."
+        },
+        {
+            "id": "conn_004",
+            "from": "loc_004",
+            "to": "loc_006",
+            "from_name": "The Mountain Pass",
+            "to_name": "The Hidden Vale",
+            "type": "unknown",
+            "bidirectional": "unknown",
+            "distance_days": "unknown",
+            "terrain_difficulty": "unknown",
+            "status": "unknown",
+            "discovered_chapter": null,
+            "notes": "Shown on burned map. Details unclear."
+        },
+        {
+            "id": "conn_005",
+            "from": "loc_001",
+            "to": "loc_005",
+            "from_name": "The Thornwood",
+            "to_name": "Keeper Settlement",
+            "type": "hidden_path",
+            "bidirectional": false,
+            "bidirectional_note": "Keepers can find you. You can't find them.",
+            "distance_days": "variable",
+            "terrain_difficulty": "impossible_without_guide",
+            "status": "conditional",
+            "access_condition": "Keepers must allow it",
+            "discovered_chapter": 6
+        }
+    ],
+    "distance_matrix": {
+        "_note": "Quick reference for travel times between key locations (in days). -1 = unknown/impassable.",
+        "loc_002": {
+            "loc_001": 0.5,
+            "loc_003": 14.5,
+            "loc_004": 17.5,
+            "loc_005": -1,
+            "loc_006": -1
+        },
+        "loc_001": {
+            "loc_002": 0.5,
+            "loc_003": 14,
+            "loc_004": 17,
+            "loc_005": -1,
+            "loc_006": -1
+        },
+        "loc_003": {
+            "loc_002": 14.5,
+            "loc_001": 14,
+            "loc_004": 3,
+            "loc_005": -1,
+            "loc_006": -1
+        },
+        "loc_004": {
+            "loc_002": 17.5,
+            "loc_001": 17,
+            "loc_003": 3,
+            "loc_005": -1,
+            "loc_006": -1
+        }
+    },
+    "terrain_types": {
+        "town": {
+            "travel_modifier": 1.0,
+            "danger_level": "none",
+            "description": "Settled area"
+        },
+        "road": {
+            "travel_modifier": 1.0,
+            "danger_level": "low",
+            "description": "Maintained path"
+        },
+        "trail": {
+            "travel_modifier": 0.7,
+            "danger_level": "low",
+            "description": "Visible but unmaintained"
+        },
+        "dense_forest": {
+            "travel_modifier": 0.3,
+            "danger_level": "high",
+            "description": "Slow, dangerous"
+        },
+        "forest_edge": {
+            "travel_modifier": 0.5,
+            "danger_level": "moderate",
+            "description": "Transitional"
+        },
+        "mountain_pass": {
+            "travel_modifier": 0.4,
+            "danger_level": "moderate",
+            "description": "Difficult terrain"
+        },
+        "mountain_valley": {
+            "travel_modifier": 0.6,
+            "danger_level": "unknown",
+            "description": "Sheltered but remote"
+        },
+        "hidden_settlement": {
+            "travel_modifier": null,
+            "danger_level": "conditional",
+            "description": "Only accessible by permission"
+        }
+    },
+    "cardinal_directions": {
+        "_note": "For prose generation - how to describe travel between locations",
+        "loc_002_to_loc_001": "east into the forest",
+        "loc_001_to_loc_002": "west toward civilization",
+        "loc_001_to_loc_003": "east through the forest depths",
+        "loc_003_to_loc_004": "east and upward into the mountains",
+        "loc_001_to_loc_005": "deeper into the forest (Keepers find you)"
+    }
+}

@@ -1,0 +1,457 @@
+{
+  "_template_note": "Remove this field when creating actual locations",
+  "_pattern_note": "Fields with 'current' + 'evolution/history': overwrite current, append to evolution. Never delete history.",
+  "id": "loc_001",
+  "name": "The Thornwood",
+  "type": "location",
+  "location_type": "wilderness",
+  "_location_type_options": [
+    "wilderness",
+    "settlement",
+    "structure",
+    "landmark",
+    "route",
+    "region"
+  ],
+  "one_liner": "A forest that remembers every trespass and has stopped forgiving",
+  "_one_liner_note": "Overwrite as understanding evolves or location changes.",
+  "status": {
+    "current": "active",
+    "_status_options": [
+      "active",
+      "discovered",
+      "undiscovered",
+      "destroyed",
+      "transformed",
+      "blocked"
+    ],
+    "current_condition": "Dense, hostile to outsiders, growing more aggressive as Mira goes deeper",
+    "history": [
+      {
+        "chapter": 3,
+        "status": "discovered",
+        "note": "Mira enters from the west"
+      },
+      {
+        "chapter": 7,
+        "status": "active",
+        "note": "Hollow encounter—forest's hostility confirmed"
+      },
+      {
+        "chapter": 15,
+        "status": "active",
+        "condition_change": "Mist thicker, paths less reliable near eastern edge"
+      }
+    ]
+  },
+  "description": {
+    "_note": "Physical description mostly stable. Note significant changes in status.history.",
+    "physical": "Ancient pines so dense they swallow light. The ground is a carpet of brown needles that muffle footsteps—your own and others'. Clearings are rare and feel like traps.",
+    "scale": "Massive—takes weeks to cross. Exact boundaries unknown.",
+    "distinguishing_features": [
+      "Bark scarred with symbols no one can read",
+      "Standing stones at irregular intervals, older than the trees",
+      "Clearings carpeted with white flowers that close at night",
+      "Paths that seem to move between visits"
+    ]
+  },
+  "geography": {
+    "terrain": "Dense old-growth forest, occasional rocky outcrops, hidden streams",
+    "elevation": "Gradual rise toward the east, approaching mountain foothills",
+    "water_sources": [
+      "Hidden streams",
+      "Stagnant pools (don't drink)",
+      "Underground springs (Keepers know where)"
+    ],
+    "hazards": [
+      "Paths that loop back",
+      "Hollows",
+      "Thornwood Keepers (if disrespected)",
+      "Predators at night"
+    ]
+  },
+  "connections": {
+    "_note": "How this location connects to others. Update as routes discovered/blocked.",
+    "current": [
+      {
+        "destination_id": "loc_002",
+        "destination_name": "Gallows Crossing",
+        "direction": "west",
+        "connection_type": "road",
+        "travel_time": "Half day from forest edge",
+        "status": "open",
+        "notes": "Clear path, well-traveled"
+      },
+      {
+        "destination_id": "loc_003",
+        "destination_name": "Eastern Thornwood Edge",
+        "direction": "east",
+        "connection_type": "forest_path",
+        "travel_time": "Two weeks through the forest",
+        "status": "dangerous",
+        "notes": "Paths unreliable. Hollows more common."
+      },
+      {
+        "destination_id": "loc_004",
+        "destination_name": "The Mountain Pass",
+        "direction": "east",
+        "connection_type": "trail",
+        "travel_time": "Three days from eastern edge",
+        "status": "unknown",
+        "notes": "Mira hasn't reached it yet"
+      },
+      {
+        "destination_id": "loc_005",
+        "destination_name": "Keeper Settlement",
+        "direction": "within",
+        "connection_type": "hidden",
+        "travel_time": "Unknown—they find you",
+        "status": "conditional",
+        "notes": "Only accessible if Keepers allow it"
+      }
+    ],
+    "evolution": [
+      {
+        "chapter": 3,
+        "discovered": "loc_002 connection",
+        "note": "Entry point established"
+      },
+      {
+        "chapter": 6,
+        "discovered": "loc_005 exists",
+        "note": "Keepers revealed themselves"
+      },
+      {
+        "chapter": 15,
+        "status_change": "Eastern paths more dangerous",
+        "note": "Forest seems to resist approach to edge"
+      }
+    ]
+  },
+  "position": {
+    "_note": "For map generation and spatial reasoning.",
+    "coordinates": {
+      "x": 0,
+      "y": 0
+    },
+    "_coordinates_note": "Relative grid. Gallows Crossing is (-2, 0). Mountain Pass is (3, 1).",
+    "region": "Western Reaches",
+    "relative_position": "Between Gallows Crossing (west) and the Mountains (east)",
+    "cardinal_description": "Stretches roughly east-west, widening toward the center"
+  },
+  "personality": {
+    "_note": "Environment as character. How this place 'feels' and 'acts'.",
+    "core_trait": {
+      "current": "hostile",
+      "evolution": [
+        {
+          "chapter": 3,
+          "trait": "watchful",
+          "note": "Observing the newcomer"
+        },
+        {
+          "chapter": 7,
+          "trait": "testing",
+          "note": "Hollow encounter was a test"
+        },
+        {
+          "chapter": 15,
+          "trait": "hostile",
+          "note": "Active resistance to passage"
+        }
+      ]
+    },
+    "atmosphere": {
+      "current": "Oppressive. The air sits thick. Sound travels wrong—whispers carry, shouts die. You're always observed.",
+      "evolution": [
+        {
+          "chapter": 3,
+          "atmosphere": "Heavy but not yet hostile"
+        },
+        {
+          "chapter": 7,
+          "atmosphere": "Actively watchful after Hollow encounter"
+        },
+        {
+          "chapter": 15,
+          "atmosphere": "Oppressive. Resisting her progress."
+        }
+      ]
+    },
+    "wants": {
+      "primary": "To be left alone",
+      "secondary": "To keep its secrets buried",
+      "provoked_by": [
+        "fire",
+        "loud noises",
+        "disrespect to the old stones",
+        "mapping"
+      ]
+    },
+    "opinions": {
+      "on_intruders": "Tolerated briefly. Tested. Most found wanting.",
+      "on_violence": "Violence here is absorbed, not witnessed. The forest doesn't judge—it simply takes.",
+      "on_time": "Patient. It has outlasted kingdoms. It will outlast you.",
+      "on_cartographers": "The old ones tried to map it. They burned. It remembers."
+    },
+    "behaviors": {
+      "welcoming": [
+        "Paths open unexpectedly",
+        "Light filters through",
+        "Birdsong resumes"
+      ],
+      "neutral": [
+        "Watches",
+        "Waits",
+        "Breathes slowly"
+      ],
+      "hostile": [
+        "Closes in",
+        "Swallows sound",
+        "Turns paths back on themselves",
+        "Sends mist to blind"
+      ],
+      "protecting": [
+        "Hides the worthy in its folds",
+        "Misleads pursuers",
+        "Offers shelter in hollowed trunks"
+      ]
+    }
+  },
+  "sensory": {
+    "_note": "Palette for writing. Append new details as revealed.",
+    "sights": [
+      "Bark scarred with symbols no one can read",
+      "Shafts of light that move wrong, against the wind",
+      "Clearings carpeted with white flowers that close at night",
+      "Shadows that pool where shadows shouldn't be"
+    ],
+    "sounds": [
+      "The creak of branches with no wind",
+      "Footsteps that echo once, then stop",
+      "Silence so deep your heartbeat becomes loud",
+      "Whispers at the edge of hearing"
+    ],
+    "smells": [
+      "Pine resin, sharp and almost medicinal",
+      "Rot beneath the needle carpet",
+      "Cold stone, like a cellar",
+      "Something sweet when danger's close"
+    ],
+    "textures": [
+      "Bark rough enough to draw blood",
+      "Needles that crunch then go silent",
+      "Cold that seeps upward from the ground",
+      "Mist that clings like wet cloth"
+    ]
+  },
+  "history": {
+    "_note": "Lore revealed through story. Append, never delete.",
+    "known_history": {
+      "current_knowledge": [
+        "The forest is older than the kingdom",
+        "Cartographers were burned here during The Burning—or fled here and never came out",
+        "The Keepers have lived here for generations"
+      ],
+      "revealed": [
+        {
+          "chapter": 6,
+          "fact": "Keepers have their own laws here",
+          "how": "direct encounter"
+        },
+        {
+          "chapter": 7,
+          "fact": "Hollows are real—forest keeps the lost",
+          "how": "direct encounter"
+        },
+        {
+          "chapter": 14,
+          "fact": "Standing stones predate the forest",
+          "how": "symbol discovery"
+        }
+      ]
+    },
+    "legends": {
+      "current": [
+        "They say the trees were planted on a battlefield",
+        "No one who's reached the heart has returned unchanged",
+        "The forest is older than the kingdom. It remembers the people before."
+      ],
+      "added": [
+        {
+          "chapter": 6,
+          "legend": "The Keepers say the forest chose them",
+          "source": "Keeper dialogue"
+        }
+      ]
+    },
+    "name_origin": "Unknown. Some say 'Thorn' was a warlord who marched an army in and never marched it out.",
+    "unrevealed_history": [
+      {
+        "fact": "The forest was planted deliberately—to hide something",
+        "planned_reveal_chapter": "28-30",
+        "reveal_method": "ancient text"
+      }
+    ]
+  },
+  "inhabitants": {
+    "_note": "Who/what lives here. Track current presence.",
+    "permanent": [
+      {
+        "entity_id": "crt_003",
+        "name": "Thornwood Keepers",
+        "type": "people_type"
+      },
+      {
+        "entity_id": "crt_002",
+        "name": "Hollows",
+        "type": "monster_type"
+      }
+    ],
+    "current_visitors": [
+      {
+        "entity_id": "char_001",
+        "name": "Mira Thorne",
+        "since_chapter": 3,
+        "location_within": "Eastern region"
+      },
+      {
+        "entity_id": "crt_001",
+        "name": "Thornback",
+        "since_chapter": 4,
+        "location_within": "Following Mira"
+      }
+    ],
+    "history": [
+      {
+        "chapter": 5,
+        "entity": "char_002",
+        "event": "Kael entered, traveling with Mira"
+      },
+      {
+        "chapter": 12,
+        "entity": "char_002",
+        "event": "Kael disappeared—still in forest somewhere?"
+      }
+    ]
+  },
+  "events_here": [
+    {
+      "chapter": 3,
+      "event": "Mira enters the Thornwood"
+    },
+    {
+      "chapter": 5,
+      "event": "Mira accepts Kael as companion"
+    },
+    {
+      "chapter": 6,
+      "event": "First encounter with Thornwood Keepers"
+    },
+    {
+      "chapter": 7,
+      "event": "Hollow blocks path—first confirmation of the threat"
+    },
+    {
+      "chapter": 9,
+      "event": "Kael saves Mira from Hollow"
+    },
+    {
+      "chapter": 11,
+      "event": "Trade with Keepers—compass for information"
+    },
+    {
+      "chapter": 12,
+      "event": "Kael's disappearance"
+    },
+    {
+      "chapter": 14,
+      "event": "Standing stone discovery—symbol matches map"
+    },
+    {
+      "chapter": 16,
+      "event": "Mira discovers Kael's letter"
+    }
+  ],
+  "narrative_function": {
+    "current": {
+      "role": "crucible",
+      "_role_options": [
+        "sanctuary",
+        "obstacle",
+        "crucible",
+        "mystery",
+        "home",
+        "prison",
+        "passage"
+      ],
+      "story_purpose": "The long dark night before dawn. Where Mira is tested, betrayed, and must find strength alone.",
+      "forces_confrontation_with": [
+        "Her own fear",
+        "What she'll do to survive",
+        "Whether she can trust anyone"
+      ],
+      "theme_connection": "Isolation as protection vs. isolation as prison"
+    },
+    "evolution": [
+      {
+        "chapter": 3,
+        "role": "obstacle",
+        "purpose": "Barrier between her and her goal"
+      },
+      {
+        "chapter": 7,
+        "role": "crucible",
+        "purpose": "Testing ground"
+      },
+      {
+        "chapter": 16,
+        "role": "crucible",
+        "purpose": "Where trust died"
+      }
+    ]
+  },
+  "mirrors": {
+    "_note": "How environment reflects character emotional states.",
+    "fear": "The forest closes in, paths disappear",
+    "guilt": "The trees seem to lean in, accusing",
+    "hope": "Light breaks through, a clearing appears",
+    "grief": "Everything goes quiet, even the wind",
+    "determination": "A path opens, narrow but clear",
+    "betrayal": "Mist rises. Everything familiar becomes untrustworthy."
+  },
+  "writing_notes": {
+    "when_to_emphasize": "When Mira is most alone, most tested, or at decision points",
+    "sensory_anchors": "The silence. The watching. Pine resin and cold stone.",
+    "avoid": "Making it generic 'dark forest.' It has specific character.",
+    "pairs_well_with": "Mira's isolation arc. Thornback's presence (wild ally in hostile place)."
+  },
+  "visual": {
+    "_note": "Stable for image consistency.",
+    "palette": "Deep greens, blue shadows, occasional gold light",
+    "mood": "Gothic, oppressive, ancient",
+    "signature_elements": [
+      "Towering pines with dark bark",
+      "Limited sky visibility",
+      "Mist at ground level",
+      "Occasional standing stones"
+    ],
+    "reference_images": [
+      "data/entities/locations/loc_001/reference_01.png"
+    ],
+    "visual_evolution": [
+      {
+        "chapter_range": "3-10",
+        "notes": "Dense but navigable. Some light."
+      },
+      {
+        "chapter_range": "11+",
+        "notes": "Darker, mistier as she goes deeper east."
+      }
+    ]
+  },
+  "created_in_chapter": 3,
+  "last_appeared_chapter": 16,
+  "created_at": "2026-01-15T10:00:00Z",
+  "updated_at": "2026-01-16T18:00:00Z"
+}

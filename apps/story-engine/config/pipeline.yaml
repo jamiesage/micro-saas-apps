@@ -109,12 +109,8 @@ email:
     from_name: "SendGrid Automation by Guild of the Amber Pen"
   
   # Notification recipients
-  recipients:
-    # Primary recipient for daily story reports
-    daily_report: "jamiesage01@gmail.com"
-    # Recipients list for error alerts
-    error_alerts:
-      - "jamiesage01@gmail.com"
+  # Note: recipient email addresses are loaded from environment variables
+  # See dev.env.example for EMAIL_RECIPIENT_DAILY_REPORT and EMAIL_RECIPIENT_ERROR_ALERTS
   
   # From address for outgoing emails
   from_address: "jamie@guildoftheamberpen.com"

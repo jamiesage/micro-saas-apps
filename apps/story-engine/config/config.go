@@ -26,6 +26,9 @@ import (
 )
 
 // Config is the root configuration struct for the story engine.
+// WARNING: Do not log this struct or its nested fields directly.
+// Several fields contain secrets (API keys, tokens, passwords) loaded from
+// environment variables that must not appear in logs or error messages.
 type Config struct {
 	Anthropic       AnthropicConfig       `mapstructure:"anthropic"`
 	Instagram       InstagramConfig       `mapstructure:"instagram"`
@@ -98,7 +101,7 @@ type EmailConfig struct {
 	Provider    string           `mapstructure:"provider"`
 	SMTP        SMTPConfig       `mapstructure:"smtp"`
 	SendGrid    SendGridConfig   `mapstructure:"sendgrid"`
-	Recipients  RecipientsConfig `mapstructure:"recipients"`
+	Recipients  RecipientsConfig // Loaded from env only
 	FromAddress string           `mapstructure:"from_address"`
 	FromName    string           `mapstructure:"from_name"`
 }
@@ -116,8 +119,8 @@ type SendGridConfig struct {
 }
 
 type RecipientsConfig struct {
-	DailyReport string   `mapstructure:"daily_report"`
-	ErrorAlerts []string `mapstructure:"error_alerts"`
+	DailyReport string   // Loaded from env only
+	ErrorAlerts []string // Loaded from env only
 }
 
 type PipelineConfig struct {
@@ -229,7 +232,7 @@ type FileConfig struct {
 
 // Load reads configuration from the pipeline.yaml and .env files
 // Environment variables take precedence over pipeline.yaml values with the same name
-// see https://github.com/spf13/viper
+// path traversal risk: this function expects a trusted configPath input
 func Load(configPath string) (*Config, error) {
 	v := viper.New()
 
@@ -256,24 +259,64 @@ func Load(configPath string) (*Config, error) {
 		return nil, fmt.Errorf("failed to unmarshal config: %w", err)
 	}
 
-	// Load sensitive values from environment
-	cfg.Anthropic.APIKey = os.Getenv("ANTHROPIC_API_KEY")
-	cfg.Instagram.AccountID = os.Getenv("INSTAGRAM_ACCOUNT_ID")
-	cfg.Instagram.AccessToken = os.Getenv("INSTAGRAM_ACCESS_TOKEN")
-	cfg.ImageGeneration.BFLAPIKey = os.Getenv("BFL_API_KEY")
-	cfg.ImageGeneration.ReplicateToken = os.Getenv("REPLICATE_API_TOKEN")
-	cfg.Email.SMTP.User = os.Getenv("SMTP_USER")
-	cfg.Email.SMTP.Password = os.Getenv("SMTP_PASSWORD")
-	cfg.Email.SendGrid.APIKey = os.Getenv("SENDGRID_API_KEY")
-	cfg.Monitoring.Healthchecks.PingURL = os.Getenv("HEALTHCHECKS_PING_URL")
+	// Load and validate secrets from environment
+	var envErrs []string
 
-	// Environment variable overrides for YAML values - i.e. for diff configs in dev / prod
-	// currently not used, example:
-	// if accountID := os.Getenv("INSTAGRAM_ACCOUNT_ID"); accountID != "" {
-	// 	cfg.Instagram.AccountID = accountID
-	// }
+	// Required API keys
+	cfg.Anthropic.APIKey = requireEnv("ANTHROPIC_API_KEY", &envErrs)
+	cfg.Instagram.AccountID = requireEnv("INSTAGRAM_ACCOUNT_ID", &envErrs)
+	cfg.Instagram.AccessToken = requireEnv("INSTAGRAM_ACCESS_TOKEN", &envErrs)
 
-	// Validate required fields
+	// Image generation (at least one required)
+	cfg.ImageGeneration.BFLAPIKey = optionalEnv("BFL_API_KEY")
+	cfg.ImageGeneration.ReplicateToken = optionalEnv("REPLICATE_API_TOKEN")
+	if cfg.ImageGeneration.BFLAPIKey == "" && cfg.ImageGeneration.ReplicateToken == "" {
+		envErrs = append(envErrs, "BFL_API_KEY or REPLICATE_API_TOKEN environment variable is required")
+	}
+
+	// Email configuration (conditionally required)
+	if cfg.Email.Enabled {
+		switch cfg.Email.Provider {
+		case "smtp":
+			cfg.Email.SMTP.User = requireEnv("SMTP_USER", &envErrs)
+			cfg.Email.SMTP.Password = requireEnv("SMTP_PASSWORD", &envErrs)
+		case "sendgrid":
+			cfg.Email.SendGrid.APIKey = requireEnv("SENDGRID_API_KEY", &envErrs)
+		}
+		// Load email recipients
+		cfg.Email.Recipients.DailyReport = requireEnv("EMAIL_RECIPIENT_DAILY_REPORT", &envErrs)
+		errorAlertsStr := requireEnv("EMAIL_RECIPIENT_ERROR_ALERTS", &envErrs)
+		if errorAlertsStr != "" {
+			// Split comma-separated list and trim whitespace
+			cfg.Email.Recipients.ErrorAlerts = strings.Split(errorAlertsStr, ",")
+			for i := range cfg.Email.Recipients.ErrorAlerts {
+				cfg.Email.Recipients.ErrorAlerts[i] = strings.TrimSpace(cfg.Email.Recipients.ErrorAlerts[i])
+			}
+		}
+	} else {
+		// Load optionally if email is disabled
+		cfg.Email.SMTP.User = optionalEnv("SMTP_USER")
+		cfg.Email.SMTP.Password = optionalEnv("SMTP_PASSWORD")
+		cfg.Email.SendGrid.APIKey = optionalEnv("SENDGRID_API_KEY")
+		cfg.Email.Recipients.DailyReport = optionalEnv("EMAIL_RECIPIENT_DAILY_REPORT")
+		errorAlertsStr := optionalEnv("EMAIL_RECIPIENT_ERROR_ALERTS")
+		if errorAlertsStr != "" {
+			cfg.Email.Recipients.ErrorAlerts = strings.Split(errorAlertsStr, ",")
+			for i := range cfg.Email.Recipients.ErrorAlerts {
+				cfg.Email.Recipients.ErrorAlerts[i] = strings.TrimSpace(cfg.Email.Recipients.ErrorAlerts[i])
+			}
+		}
+	}
+
+	// Required monitoring
+	cfg.Monitoring.Healthchecks.PingURL = requireEnv("HEALTHCHECKS_PING_URL", &envErrs)
+
+	// Check for environment variable errors
+	if len(envErrs) > 0 {
+		return nil, fmt.Errorf("environment variable errors:\n  - %s", strings.Join(envErrs, "\n  - "))
+	}
+
+	// Validate logical value constraints
 	if err := cfg.Validate(); err != nil {
 		return nil, fmt.Errorf("config validation failed: %w", err)
 	}
@@ -281,54 +324,20 @@ func Load(configPath string) (*Config, error) {
 	return &cfg, nil
 }
 
-// Validate checks that all required configuration values are present.
+// checks logical constraints on configuration values.
+// Environment variable presence is validated during Load().
 func (c *Config) Validate() error {
 	var errs []string
 
-	// Required API keys
-	if c.Anthropic.APIKey == "" {
-		errs = append(errs, "ANTHROPIC_API_KEY environment variable is required")
-	}
-	if c.Instagram.AccessToken == "" {
-		errs = append(errs, "INSTAGRAM_ACCESS_TOKEN environment variable is required")
-	}
-	if c.Instagram.AccountID == "" {
-		errs = append(errs, "INSTAGRAM_ACCOUNT_ID environment variable is required")
-	}
-
-	// Image generation API key (one of them required)
-	if c.ImageGeneration.BFLAPIKey == "" && c.ImageGeneration.ReplicateToken == "" {
-		errs = append(errs, "BFL_API_KEY or REPLICATE_API_TOKEN environment variable is required")
-	}
-
-	// Email configuration (if enabled)
-	if c.Email.Enabled {
-		switch c.Email.Provider {
-		case "smtp":
-			if c.Email.SMTP.User == "" || c.Email.SMTP.Password == "" {
-				errs = append(errs, "SMTP_USER and SMTP_PASSWORD are required when using SMTP")
-			}
-		case "sendgrid":
-			if c.Email.SendGrid.APIKey == "" {
-				errs = append(errs, "SENDGRID_API_KEY is required when using SendGrid")
-			}
-		}
-	}
-
-	// Validate thinking budget bounds
-	if c.Anthropic.Thinking.Enabled {
-		if c.Anthropic.Thinking.BudgetTokens < 1024 {
-			errs = append(errs, "thinking.budget_tokens must be at least 1024")
-		}
-		if c.Anthropic.Thinking.BudgetTokens > 64000 {
-			errs = append(errs, "thinking.budget_tokens must not exceed 64000")
-		}
-	}
-
-	// Validate story constraints
-	if c.Pipeline.Story.MaxChapterLength <= c.Pipeline.Story.MinChapterLength {
-		errs = append(errs, "story.max_chapter_length must be greater than min_chapter_length")
-	}
+	// Validate each section
+	errs = append(errs, c.validateAnthropic()...)
+	errs = append(errs, c.validateInstagram()...)
+	errs = append(errs, c.validateImageGeneration()...)
+	errs = append(errs, c.validateEmail()...)
+	errs = append(errs, c.validatePipeline()...)
+	errs = append(errs, c.validatePaths()...)
+	errs = append(errs, c.validateMonitoring()...)
+	errs = append(errs, c.validateLogging()...)
 
 	if len(errs) > 0 {
 		return fmt.Errorf("configuration errors:\n  - %s", strings.Join(errs, "\n  - "))
@@ -337,9 +346,355 @@ func (c *Config) Validate() error {
 	return nil
 }
 
+// validateAnthropic validates Anthropic configuration.
+func (c *Config) validateAnthropic() []string {
+	var errs []string
+
+	if c.Anthropic.PrimaryModel == "" {
+		errs = append(errs, "anthropic.primary_model is required")
+	}
+
+	if c.Anthropic.FastModel == "" {
+		errs = append(errs, "anthropic.fast_model is required")
+	}
+
+	if c.Anthropic.MaxTokens <= 0 {
+		errs = append(errs, "anthropic.max_tokens must be greater than 0")
+	}
+
+	// Validate thinking budget bounds
+	if c.Anthropic.Thinking.Enabled {
+		if c.Anthropic.Thinking.BudgetTokens < 1024 {
+			errs = append(errs, "anthropic.thinking.budget_tokens must be at least 1024")
+		}
+		if c.Anthropic.Thinking.BudgetTokens > 64000 {
+			errs = append(errs, "anthropic.thinking.budget_tokens must not exceed 64000")
+		}
+	}
+
+	// Validate retry configuration
+	if c.Anthropic.Retry.MaxAttempts <= 0 {
+		errs = append(errs, "anthropic.retry.max_attempts must be greater than 0")
+	}
+	if c.Anthropic.Retry.InitialDelayMs <= 0 {
+		errs = append(errs, "anthropic.retry.initial_delay_ms must be greater than 0")
+	}
+	if c.Anthropic.Retry.MaxDelayMs <= 0 {
+		errs = append(errs, "anthropic.retry.max_delay_ms must be greater than 0")
+	}
+	if c.Anthropic.Retry.MaxDelayMs < c.Anthropic.Retry.InitialDelayMs {
+		errs = append(errs, "anthropic.retry.max_delay_ms must be greater than or equal to initial_delay_ms")
+	}
+	if c.Anthropic.Retry.Multiplier <= 0 {
+		errs = append(errs, "anthropic.retry.multiplier must be greater than 0")
+	}
+
+	return errs
+}
+
+// validateInstagram validates Instagram configuration.
+func (c *Config) validateInstagram() []string {
+	var errs []string
+
+	if c.Instagram.CommentsToFetch < 1 || c.Instagram.CommentsToFetch > 100 {
+		errs = append(errs, "instagram.comments_to_fetch must be between 1 and 100")
+	}
+
+	if c.Instagram.MinLikesThreshold < 0 {
+		errs = append(errs, "instagram.min_likes_threshold must be greater than or equal to 0")
+	}
+
+	if c.Instagram.TopCommentsForFiltering <= 0 {
+		errs = append(errs, "instagram.top_comments_for_filtering must be greater than 0")
+	}
+
+	if c.Instagram.TopCommentsForFiltering > c.Instagram.CommentsToFetch {
+		errs = append(errs, "instagram.top_comments_for_filtering must not exceed comments_to_fetch")
+	}
+
+	// Validate rate limits
+	if c.Instagram.RateLimit.RequestsPerHour <= 0 {
+		errs = append(errs, "instagram.rate_limit.requests_per_hour must be greater than 0")
+	}
+	if c.Instagram.RateLimit.RetryAfterSeconds <= 0 {
+		errs = append(errs, "instagram.rate_limit.retry_after_seconds must be greater than 0")
+	}
+
+	return errs
+}
+
+// validateImageGeneration validates image generation configuration.
+func (c *Config) validateImageGeneration() []string {
+	var errs []string
+
+	if c.ImageGeneration.Provider != "bfl" && c.ImageGeneration.Provider != "replicate" {
+		errs = append(errs, "image_generation.provider must be 'bfl' or 'replicate'")
+	}
+
+	if c.ImageGeneration.Model == "" {
+		errs = append(errs, "image_generation.model is required")
+	}
+
+	if c.ImageGeneration.ImagesPerChapter < 1 || c.ImageGeneration.ImagesPerChapter > 4 {
+		errs = append(errs, "image_generation.images_per_chapter must be between 1 and 4")
+	}
+
+	if c.ImageGeneration.Width <= 0 {
+		errs = append(errs, "image_generation.width must be greater than 0")
+	}
+
+	if c.ImageGeneration.Height <= 0 {
+		errs = append(errs, "image_generation.height must be greater than 0")
+	}
+
+	if c.ImageGeneration.GuidanceScale <= 0 {
+		errs = append(errs, "image_generation.guidance_scale must be greater than 0")
+	}
+
+	if c.ImageGeneration.NumInferenceSteps <= 0 {
+		errs = append(errs, "image_generation.num_inference_steps must be greater than 0")
+	}
+
+	if c.ImageGeneration.TimeoutSeconds <= 0 {
+		errs = append(errs, "image_generation.timeout_seconds must be greater than 0")
+	}
+
+	// Validate retry configuration
+	if c.ImageGeneration.Retry.MaxAttempts <= 0 {
+		errs = append(errs, "image_generation.retry.max_attempts must be greater than 0")
+	}
+	if c.ImageGeneration.Retry.DelaySeconds <= 0 {
+		errs = append(errs, "image_generation.retry.delay_seconds must be greater than 0")
+	}
+
+	return errs
+}
+
+// validateEmail validates email configuration with conditional logic.
+func (c *Config) validateEmail() []string {
+	var errs []string
+
+	// Only validate if email is enabled
+	if !c.Email.Enabled {
+		return errs
+	}
+
+	// Validate provider choice
+	if c.Email.Provider != "smtp" && c.Email.Provider != "sendgrid" {
+		errs = append(errs, "email.provider must be 'smtp' or 'sendgrid' when email is enabled")
+	}
+
+	// Validate provider-specific configuration
+	if c.Email.Provider == "smtp" {
+		if c.Email.SMTP.Host == "" {
+			errs = append(errs, "email.smtp.host is required when using smtp provider")
+		}
+		if c.Email.SMTP.Port <= 0 {
+			errs = append(errs, "email.smtp.port must be greater than 0 when using smtp provider")
+		}
+	}
+
+	// Validate common email fields
+	if c.Email.FromAddress == "" {
+		errs = append(errs, "email.from_address is required when email is enabled")
+	}
+
+	if c.Email.Recipients.DailyReport == "" {
+		errs = append(errs, "email.recipients.daily_report is required when email is enabled")
+	}
+
+	if len(c.Email.Recipients.ErrorAlerts) == 0 {
+		errs = append(errs, "email.recipients.error_alerts must have at least one recipient when email is enabled")
+	}
+
+	return errs
+}
+
+// validatePipeline validates pipeline configuration.
+func (c *Config) validatePipeline() []string {
+	var errs []string
+
+	if c.Pipeline.Schedule == "" {
+		errs = append(errs, "pipeline.schedule is required")
+	}
+
+	if c.Pipeline.Timezone == "" {
+		errs = append(errs, "pipeline.timezone is required")
+	} else {
+		// Validate timezone is valid
+		if _, err := time.LoadLocation(c.Pipeline.Timezone); err != nil {
+			errs = append(errs, fmt.Sprintf("pipeline.timezone '%s' is not a valid timezone", c.Pipeline.Timezone))
+		}
+	}
+
+	// Validate story constraints
+	if c.Pipeline.Story.MaxChapterLength <= 0 {
+		errs = append(errs, "pipeline.story.max_chapter_length must be greater than 0")
+	}
+	if c.Pipeline.Story.MinChapterLength <= 0 {
+		errs = append(errs, "pipeline.story.min_chapter_length must be greater than 0")
+	}
+	if c.Pipeline.Story.TargetChapterLength <= 0 {
+		errs = append(errs, "pipeline.story.target_chapter_length must be greater than 0")
+	}
+	if c.Pipeline.Story.MaxChapterLength <= c.Pipeline.Story.MinChapterLength {
+		errs = append(errs, "pipeline.story.max_chapter_length must be greater than min_chapter_length")
+	}
+	if c.Pipeline.Story.TargetChapterLength < c.Pipeline.Story.MinChapterLength ||
+		c.Pipeline.Story.TargetChapterLength > c.Pipeline.Story.MaxChapterLength {
+		errs = append(errs, "pipeline.story.target_chapter_length must be between min and max chapter length")
+	}
+
+	// Validate hashtag constraints
+	if c.Pipeline.Hashtags.CountMin <= 0 {
+		errs = append(errs, "pipeline.hashtags.count_min must be greater than 0")
+	}
+	if c.Pipeline.Hashtags.CountMax <= 0 {
+		errs = append(errs, "pipeline.hashtags.count_max must be greater than 0")
+	}
+	if c.Pipeline.Hashtags.CountMax < c.Pipeline.Hashtags.CountMin {
+		errs = append(errs, "pipeline.hashtags.count_max must be greater than or equal to count_min")
+	}
+	if c.Pipeline.Hashtags.MaxTotalCharacters <= 0 {
+		errs = append(errs, "pipeline.hashtags.max_total_characters must be greater than 0")
+	}
+
+	// Validate context constraints
+	if c.Pipeline.Context.RecentChaptersCount <= 0 {
+		errs = append(errs, "pipeline.context.recent_chapters_count must be greater than 0")
+	}
+	if c.Pipeline.Context.FullTextChapters <= 0 {
+		errs = append(errs, "pipeline.context.full_text_chapters must be greater than 0")
+	}
+	if c.Pipeline.Context.FullTextChapters > c.Pipeline.Context.RecentChaptersCount {
+		errs = append(errs, "pipeline.context.full_text_chapters must not exceed recent_chapters_count")
+	}
+	if c.Pipeline.Context.MaxEntities <= 0 {
+		errs = append(errs, "pipeline.context.max_entities must be greater than 0")
+	}
+
+	// Validate validation constraints
+	if c.Pipeline.Validation.LengthRetryAttempts < 0 {
+		errs = append(errs, "pipeline.validation.length_retry_attempts must be greater than or equal to 0")
+	}
+
+	// Validate checkpoint constraints
+	if c.Pipeline.Checkpoints.Enabled && c.Pipeline.Checkpoints.RetentionDays <= 0 {
+		errs = append(errs, "pipeline.checkpoints.retention_days must be greater than 0 when checkpoints are enabled")
+	}
+
+	return errs
+}
+
+// validatePaths validates paths configuration.
+func (c *Config) validatePaths() []string {
+	var errs []string
+
+	if c.Paths.DataDir == "" {
+		errs = append(errs, "paths.data_dir is required")
+	}
+
+	if c.Paths.StoryBible == "" {
+		errs = append(errs, "paths.story_bible is required")
+	}
+
+	if c.Paths.EntitiesDir == "" {
+		errs = append(errs, "paths.entities_dir is required")
+	}
+
+	if c.Paths.ChaptersDir == "" {
+		errs = append(errs, "paths.chapters_dir is required")
+	}
+
+	if c.Paths.RunsDir == "" {
+		errs = append(errs, "paths.runs_dir is required")
+	}
+
+	if c.Paths.PromptsDir == "" {
+		errs = append(errs, "paths.prompts_dir is required")
+	}
+
+	if c.Paths.TemplatesDir == "" {
+		errs = append(errs, "paths.templates_dir is required")
+	}
+
+	return errs
+}
+
+// validateMonitoring validates monitoring configuration.
+func (c *Config) validateMonitoring() []string {
+	var errs []string
+
+	// Validate healthchecks configuration
+	if c.Monitoring.Healthchecks.Enabled {
+		if c.Monitoring.Healthchecks.TimeoutSeconds <= 0 {
+			errs = append(errs, "monitoring.healthchecks.timeout_seconds must be greater than 0 when healthchecks are enabled")
+		}
+	}
+
+	// Validate HTTP configuration
+	if c.Monitoring.HTTP.Enabled {
+		if c.Monitoring.HTTP.Port <= 0 {
+			errs = append(errs, "monitoring.http.port must be greater than 0 when HTTP monitoring is enabled")
+		}
+	}
+
+	// Validate cost tracking configuration
+	if c.Monitoring.CostTracking.Enabled {
+		if c.Monitoring.CostTracking.DailyAlertThreshold < 0 {
+			errs = append(errs, "monitoring.cost_tracking.daily_alert_threshold must be greater than or equal to 0")
+		}
+		if c.Monitoring.CostTracking.LogFile == "" {
+			errs = append(errs, "monitoring.cost_tracking.log_file is required when cost tracking is enabled")
+		}
+	}
+
+	return errs
+}
+
+// validateLogging validates logging configuration.
+func (c *Config) validateLogging() []string {
+	var errs []string
+
+	validLevels := map[string]bool{"debug": true, "info": true, "warn": true, "error": true}
+	if !validLevels[c.Logging.Level] {
+		errs = append(errs, "logging.level must be one of: debug, info, warn, error")
+	}
+
+	validFormats := map[string]bool{"json": true, "text": true}
+	if !validFormats[c.Logging.Format] {
+		errs = append(errs, "logging.format must be one of: json, text")
+	}
+
+	if c.Logging.File.Enabled && c.Logging.File.FilenamePattern == "" {
+		errs = append(errs, "logging.file.filename_pattern is required when file logging is enabled")
+	}
+
+	return errs
+}
+
+// for cron job scheduling
 // GetTimezone returns the configured timezone as a *time.Location.
 func (c *Config) GetTimezone() (*time.Location, error) {
-	return time.LoadLocation(c.Pipeline.Timezone)
+	loc, err := time.LoadLocation(c.Pipeline.Timezone)
+	if err != nil {
+		return nil, fmt.Errorf("failed to load timezone %q: %w", c.Pipeline.Timezone, err)
+	}
+	return loc, nil
+}
+
+// requireEnv loads a required environment variable and adds an error if missing.
+func requireEnv(key string, errs *[]string) string {
+	val := os.Getenv(key)
+	if val == "" {
+		*errs = append(*errs, fmt.Sprintf("%s environment variable is required", key))
+	}
+	return val
+}
+
+// optionalEnv loads an optional environment variable.
+func optionalEnv(key string) string {
+	return os.Getenv(key)
 }
 
 // GetModelForAgent returns the appropriate model for a given agent,

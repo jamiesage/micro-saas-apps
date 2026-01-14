@@ -1,0 +1,648 @@
+{
+    "_template_note": "Remove this field when creating actual characters",
+    "_pattern_note": "Fields with 'current' + 'evolution/history': overwrite current, append to evolution. Never delete history.",
+    "id": "char_001",
+    "name": "Mira Thorne",
+    "type": "character",
+    "one_liner": "A cartographer's daughter hunting the brother who vanished—and the man who betrayed her",
+    "_one_liner_note": "Overwrite as character evolves. Should reflect CURRENT state.",
+    "status": {
+        "current": "alive",
+        "history": [
+            {
+                "chapter": 1,
+                "status": "alive",
+                "note": "Introduced"
+            },
+            {
+                "chapter": 12,
+                "status": "injured",
+                "note": "Arrow wound, left shoulder"
+            },
+            {
+                "chapter": 14,
+                "status": "alive",
+                "note": "Recovered"
+            }
+        ]
+    },
+    "location": {
+        "current": "loc_003",
+        "current_name": "Eastern edge of Thornwood",
+        "history": [
+            {
+                "chapter": 1,
+                "location": "loc_002",
+                "name": "Gallows Crossing"
+            },
+            {
+                "chapter": 3,
+                "location": "loc_001",
+                "name": "Thornwood entrance"
+            },
+            {
+                "chapter": 16,
+                "location": "loc_003",
+                "name": "Eastern Thornwood"
+            }
+        ]
+    },
+    "description": {
+        "_note": "Mostly static. Update if significant physical change occurs and note in status.history.",
+        "physical": "Lean and angular, mid-twenties. Dark hair cut short and uneven—she does it herself. A scar runs along her left forearm from wrist to elbow, pale against tan skin. Moves like someone used to tight spaces.",
+        "presence": "Takes up less room than she should. You notice her absence before her arrival.",
+        "distinguishing_marks": [
+            "Scar on left forearm (from workshop fire, age 12)",
+            "Ink-stained fingertips",
+            "Slight limp when tired (old injury, right ankle)"
+        ]
+    },
+    "personality": {
+        "core_trait": {
+            "current": "hardened",
+            "evolution": [
+                {
+                    "chapter": 1,
+                    "trait": "determined",
+                    "note": "Driven but still hopeful"
+                },
+                {
+                    "chapter": 10,
+                    "trait": "guarded",
+                    "note": "After first betrayal signs"
+                },
+                {
+                    "chapter": 16,
+                    "trait": "hardened",
+                    "note": "Post-Kael revelation"
+                }
+            ]
+        },
+        "secondary_traits": [
+            "observant",
+            "guarded",
+            "practical"
+        ],
+        "_secondary_traits_note": "Relatively stable. Update if significant shift.",
+        "wants": {
+            "current": {
+                "external": "To find her brother",
+                "internal": "To make Kael answer for his betrayal",
+                "secret": "To stop feeling anything"
+            },
+            "evolution": [
+                {
+                    "chapter": 1,
+                    "wants": {
+                        "external": "To find her brother",
+                        "internal": "To prove she's not the one who failed him",
+                        "secret": "To stop running"
+                    },
+                    "note": "Initial state"
+                },
+                {
+                    "chapter": 16,
+                    "wants": {
+                        "external": "To find her brother",
+                        "internal": "To make Kael answer for his betrayal",
+                        "secret": "To stop feeling anything"
+                    },
+                    "trigger": "Discovery of betrayal shifted internal motivation"
+                }
+            ]
+        },
+        "fears": {
+            "current": {
+                "external": "Being trapped—physically or by trust",
+                "internal": "That she's become someone her brother wouldn't recognize",
+                "secret": "That everyone leaves because of something in her"
+            },
+            "evolution": [
+                {
+                    "chapter": 1,
+                    "fears": {
+                        "external": "Enclosed spaces, being trapped",
+                        "internal": "That she's become someone her brother wouldn't recognize",
+                        "secret": "That he's already dead and she's chasing a ghost"
+                    }
+                },
+                {
+                    "chapter": 16,
+                    "fears": {
+                        "external": "Being trapped—physically or by trust",
+                        "internal": "That she's become someone her brother wouldn't recognize",
+                        "secret": "That everyone leaves because of something in her"
+                    },
+                    "trigger": "Betrayal reframed her fears around trust, not just physical danger"
+                }
+            ]
+        },
+        "flaws": [
+            "Trusts maps more than people",
+            "Leaves before she can be left",
+            "Mistakes self-reliance for strength"
+        ],
+        "strengths": [
+            "Reads landscapes like text—misses nothing",
+            "Survives where others wouldn't last a day",
+            "Keeps promises, even costly ones"
+        ],
+        "blind_spots": {
+            "current": [
+                "Assumes all kindness is manipulation",
+                "Can't ask for help even when drowning",
+                "Sees patterns of betrayal everywhere now"
+            ],
+            "evolution": [
+                {
+                    "chapter": 1,
+                    "blind_spots": [
+                        "Doesn't recognize kindness—assumes manipulation",
+                        "Can't ask for help even when drowning",
+                        "Believes being needed equals being loved"
+                    ]
+                },
+                {
+                    "chapter": 16,
+                    "blind_spots": [
+                        "Assumes all kindness is manipulation",
+                        "Can't ask for help even when drowning",
+                        "Sees patterns of betrayal everywhere now"
+                    ],
+                    "trigger": "Betrayal confirmed her worst assumptions"
+                }
+            ]
+        }
+    },
+    "voice": {
+        "current": {
+            "speech_pattern": "Minimal. Statements, not questions. Lets silence do the work.",
+            "vocabulary_level": "Educated but practical. Technical for terrain. Clipped.",
+            "verbal_tics": [
+                "Says nothing when she'd once have argued",
+                "Ends conversations by walking away"
+            ],
+            "what_they_never_says": [
+                "His name (Kael)",
+                "Anything about trust",
+                "Apologies"
+            ]
+        },
+        "evolution": [
+            {
+                "chapter_range": "1-5",
+                "speech_pattern": "Short sentences. Drops pronouns when stressed. Rarely asks questions.",
+                "verbal_tics": [
+                    "Starts sentences with 'Look—' when impatient",
+                    "Says 'fair enough' to end conversations"
+                ],
+                "note": "Baseline voice—guarded but functional"
+            },
+            {
+                "chapter_range": "6-10",
+                "speech_pattern": "Slightly more open. Responds to Kael's questions. Occasional dry humor.",
+                "verbal_tics": [
+                    "Allows herself to be drawn into conversation",
+                    "Sarcasm emerges"
+                ],
+                "note": "Relaxing around ally"
+            },
+            {
+                "chapter_range": "11-15",
+                "speech_pattern": "Clipped again. Fewer voluntary words. Returns to short sentences.",
+                "verbal_tics": [
+                    "Answering questions with questions",
+                    "Long pauses before responding"
+                ],
+                "note": "Suspicion creeping in"
+            },
+            {
+                "chapter_range": "16+",
+                "speech_pattern": "Minimal. Statements, not questions. Lets silence do the work.",
+                "verbal_tics": [
+                    "Says nothing when she'd once have argued",
+                    "Ends conversations by walking away"
+                ],
+                "note": "Post-betrayal shutdown",
+                "trigger": "Discovery of Kael's letter"
+            }
+        ],
+        "dialogue_examples": {
+            "current": [
+                "No.",
+                "You have until dawn.",
+                "I saw the letter."
+            ],
+            "evolution": [
+                {
+                    "chapter_range": "1-5",
+                    "examples": [
+                        "The mountain doesn't care what you meant to do. Only what you did.",
+                        "You coming or not? I won't ask twice."
+                    ]
+                },
+                {
+                    "chapter_range": "6-10",
+                    "examples": [
+                        "That's either the worst plan I've heard or the best. I can't tell.",
+                        "Fine. But if we die, I'm blaming you."
+                    ]
+                },
+                {
+                    "chapter_range": "16+",
+                    "examples": [
+                        "No.",
+                        "You have until dawn.",
+                        "I saw the letter."
+                    ]
+                }
+            ]
+        }
+    },
+    "interiority": {
+        "current": {
+            "recurring_thought": "I knew. I knew and I let myself forget.",
+            "mental_habits": [
+                "Maps escape routes in every room",
+                "Counts exits",
+                "Notes what people carry and how they carry it",
+                "Replays every conversation with Kael, looking for signs"
+            ]
+        },
+        "evolution": [
+            {
+                "chapter": 1,
+                "recurring_thought": "If I'd been faster, smarter, better—",
+                "mental_habits": [
+                    "Maps escape routes in every room",
+                    "Counts exits",
+                    "Notes what people carry and how they carry it"
+                ]
+            },
+            {
+                "chapter": 16,
+                "recurring_thought": "I knew. I knew and I let myself forget.",
+                "mental_habits": [
+                    "Maps escape routes in every room",
+                    "Counts exits",
+                    "Notes what people carry and how they carry it",
+                    "Replays every conversation with Kael, looking for signs"
+                ],
+                "trigger": "Betrayal added obsessive review of past"
+            }
+        ],
+        "memory_triggers": {
+            "_note": "Append as new triggers are revealed. Don't delete.",
+            "triggers": [
+                {
+                    "trigger": "smell_of_pine_smoke",
+                    "memory": "Father's workshop, the day before it burned",
+                    "revealed_chapter": 3
+                },
+                {
+                    "trigger": "sound_of_running_water",
+                    "memory": "The river where she last saw her brother",
+                    "revealed_chapter": 1
+                },
+                {
+                    "trigger": "taste_of_salt",
+                    "memory": "Mother's cooking, before everything",
+                    "revealed_chapter": 7
+                },
+                {
+                    "trigger": "red_wax_seal",
+                    "memory": "Father burning similar letters—what was he hiding?",
+                    "revealed_chapter": 16
+                }
+            ]
+        },
+        "inner_contradictions": [
+            "Craves connection but sabotages it",
+            "Values truth but hides her own",
+            "Wants to stop running but doesn't know how to stay"
+        ]
+    },
+    "physical_tells": {
+        "current": {
+            "anxiety": "Picks at the scar on her forearm. Doesn't notice she's doing it.",
+            "anger": "Goes very still. Voice drops quieter, not louder.",
+            "lying": "Maintains eye contact too deliberately. Over-explains.",
+            "grief": "Jaw tightens. Swallows hard. Changes the subject.",
+            "trust": "Turns her back to someone. Rare.",
+            "fear": "Hand moves toward her knife. Breathing shallows.",
+            "betrayal": "Hands shake. First loss of composure."
+        },
+        "evolution": [
+            {
+                "chapter": 16,
+                "added": "betrayal",
+                "detail": "Hands shake. First loss of composure.",
+                "note": "New tell emerged during letter discovery—she'd never experienced this specific wound before"
+            }
+        ]
+    },
+    "relationships": [
+        {
+            "entity_id": "char_002",
+            "entity_name": "Kael Vorn",
+            "current": {
+                "type": "adversary",
+                "status": "trust_destroyed",
+                "dynamic": "She knows. He doesn't know she knows.",
+                "what_she_wants_from_them": "Answers first. Then justice.",
+                "what_she_fears_from_them": "That his explanation will make sense"
+            },
+            "evolution": [
+                {
+                    "chapter": 5,
+                    "type": "reluctant_ally",
+                    "status": "wary",
+                    "event": "Accepted him as traveling companion",
+                    "dynamic": "Tolerating, not trusting"
+                },
+                {
+                    "chapter": 9,
+                    "type": "ally",
+                    "status": "growing_trust",
+                    "event": "He saved her from the Hollow",
+                    "dynamic": "First genuine reliance on another person"
+                },
+                {
+                    "chapter": 12,
+                    "type": "complicated_ally",
+                    "status": "suspicious",
+                    "event": "His unexplained disappearance",
+                    "dynamic": "Wanting to trust, unable to ignore signs"
+                },
+                {
+                    "chapter": 16,
+                    "type": "adversary",
+                    "status": "trust_destroyed",
+                    "event": "Found the letter proving betrayal",
+                    "dynamic": "She knows. He doesn't know she knows."
+                }
+            ]
+        },
+        {
+            "entity_id": "char_003",
+            "entity_name": "Brennan Thorne",
+            "current": {
+                "type": "family",
+                "status": "missing",
+                "dynamic": "Absence that drives everything. Goal, not person.",
+                "what_she_wants_from_them": "To find him alive",
+                "what_she_fears_from_them": "That he left on purpose, or that finding him will end her purpose"
+            },
+            "evolution": [
+                {
+                    "chapter": 1,
+                    "type": "family",
+                    "status": "missing",
+                    "event": "Established as driving motivation",
+                    "dynamic": "The reason for everything"
+                }
+            ]
+        }
+    ],
+    "backstory": {
+        "_note": "Append to revealed_events as backstory is shown in story. Never delete.",
+        "origin": "Coastal village, family of cartographers going back generations",
+        "revealed_events": [
+            {
+                "event": "Father's workshop fire",
+                "age": 12,
+                "impact": "Lost family maps, gained scar, learned nothing is permanent",
+                "revealed_in_chapter": 3,
+                "how_revealed": "memory_flash",
+                "trigger": "Smell of smoke"
+            },
+            {
+                "event": "Mother's death",
+                "age": 17,
+                "impact": "Became brother's responsibility, then her own",
+                "revealed_in_chapter": 7,
+                "how_revealed": "dialogue",
+                "trigger": "Kael asked about her family"
+            },
+            {
+                "event": "Brother's disappearance",
+                "age": 22,
+                "impact": "Inciting incident—she's been searching for two years",
+                "revealed_in_chapter": 1,
+                "how_revealed": "narration",
+                "trigger": "Opening context"
+            }
+        ],
+        "unrevealed_events": [
+            {
+                "event": "Father's secret correspondence",
+                "planned_reveal_chapter": "20-22",
+                "reveal_method": "object",
+                "significance": "Father knew more than he told. The map wasn't his only secret."
+            }
+        ],
+        "skills_and_origins": {
+            "navigation": {
+                "origin": "Apprenticed to father from age 6",
+                "revealed_chapter": 1
+            },
+            "survival": {
+                "origin": "Learned hard way after brother disappeared",
+                "revealed_chapter": 4
+            },
+            "knife_work": {
+                "origin": "Brother taught her. Practical, not pretty.",
+                "revealed_chapter": 7
+            }
+        }
+    },
+    "arc_tracking": {
+        "arc_type": "positive_disillusionment",
+        "core_question": "Can you find what you're looking for and still recognize yourself?",
+        "starting_state": "Isolated, driven, running toward her brother and away from connection",
+        "current_state": {
+            "chapter": 16,
+            "summary": "Betrayed, hardened, trust shattered. Still searching but now also hunting.",
+            "emotional_position": "Lowest point—setup for eventual choice",
+            "distance_from_start": "Further from connection than when she started. The wall is higher.",
+            "distance_from_goal": "Closer to brother geographically, further from self"
+        },
+        "arc_beats": [
+            {
+                "chapter": 5,
+                "beat": "Accepts help",
+                "significance": "First crack in isolation",
+                "direction": "up",
+                "what_changed": "Allowed someone to travel with her"
+            },
+            {
+                "chapter": 9,
+                "beat": "Genuinely relies on Kael",
+                "significance": "Vulnerability allowed",
+                "direction": "up",
+                "what_changed": "Trusted someone to watch her back"
+            },
+            {
+                "chapter": 12,
+                "beat": "Suspicion emerges",
+                "significance": "Trust cracks",
+                "direction": "down",
+                "what_changed": "Can't ignore the signs anymore"
+            },
+            {
+                "chapter": 16,
+                "beat": "Trust destroyed",
+                "significance": "Worse than before she trusted",
+                "direction": "down",
+                "what_changed": "Confirmed that opening up leads to pain"
+            }
+        ],
+        "milestones_remaining": [
+            {
+                "milestone": "Confronts Kael",
+                "target_chapter_range": "17-18",
+                "achieved_in_chapter": null,
+                "significance": "First time she faces betrayal directly"
+            },
+            {
+                "milestone": "Chooses to trust again (or refuses)",
+                "target_chapter_range": "25-28",
+                "achieved_in_chapter": null,
+                "significance": "Arc pivot—will she harden permanently or risk again?"
+            },
+            {
+                "milestone": "Learns Brennan's fate",
+                "target_chapter_range": "30-35",
+                "achieved_in_chapter": null,
+                "significance": "External goal resolved—what remains?"
+            }
+        ],
+        "potential_endings": [
+            "Finds brother, must let him go",
+            "Becomes the cartographer he was—finishes his work",
+            "Chooses to stay somewhere for the first time",
+            "Remains alone but at peace with it"
+        ]
+    },
+    "narrative_function": {
+        "_note": "Overwrite as role evolves.",
+        "role": "protagonist",
+        "pov_character": true,
+        "story_purpose": "Lens through which we see the world. Her isolation mirrors the setting's hostility.",
+        "theme_embodiment": "The cost of searching vs. the cost of stopping. What we become when we won't let go."
+    },
+    "inventory": {
+        "current": [
+            "obj_001",
+            "obj_002",
+            "obj_003"
+        ],
+        "current_items_named": [
+            {
+                "id": "obj_001",
+                "name": "The Burned Map"
+            },
+            {
+                "id": "obj_002",
+                "name": "Kael's Letter"
+            },
+            {
+                "id": "obj_003",
+                "name": "Brennan's Knife"
+            }
+        ],
+        "history": [
+            {
+                "chapter": 1,
+                "gained": "obj_001",
+                "name": "The Burned Map",
+                "how": "Had from start"
+            },
+            {
+                "chapter": 1,
+                "gained": "obj_003",
+                "name": "Brennan's Knife",
+                "how": "Found in his room"
+            },
+            {
+                "chapter": 11,
+                "lost": "obj_005",
+                "name": "Surveyor's Compass",
+                "how": "Traded to Thornwood Keepers"
+            },
+            {
+                "chapter": 16,
+                "gained": "obj_002",
+                "name": "Kael's Letter",
+                "how": "Found in his tent"
+            }
+        ]
+    },
+    "key_events": [
+        {
+            "chapter": 1,
+            "event": "Introduced crossing Thornwood alone"
+        },
+        {
+            "chapter": 3,
+            "event": "Memory flash: father's workshop fire"
+        },
+        {
+            "chapter": 5,
+            "event": "Reluctantly accepts Kael as traveling companion"
+        },
+        {
+            "chapter": 7,
+            "event": "Reveals family history to Kael"
+        },
+        {
+            "chapter": 9,
+            "event": "Kael saves her from Hollow—trust builds"
+        },
+        {
+            "chapter": 11,
+            "event": "Trades compass to Thornwood Keepers for information"
+        },
+        {
+            "chapter": 12,
+            "event": "Kael disappears overnight—suspicion grows"
+        },
+        {
+            "chapter": 14,
+            "event": "Finds matching symbol on standing stone"
+        },
+        {
+            "chapter": 16,
+            "event": "Discovers letter proving Kael's betrayal"
+        }
+    ],
+    "visual": {
+        "_note": "Relatively stable for image consistency. Update if significant change.",
+        "palette": "Earth tones, weathered leather, practical clothes in browns and greys",
+        "mood": "Sharp, watchful, compressed energy",
+        "signature_elements": [
+            "Worn satchel with map tubes",
+            "Knife at belt, handle wrapped in cord",
+            "Short dark hair, unevenly cut",
+            "Scar visible on left forearm"
+        ],
+        "reference_images": [
+            "data/entities/characters/char_001/reference_01.png"
+        ],
+        "visual_evolution": [
+            {
+                "chapter_range": "1-11",
+                "notes": "Baseline appearance"
+            },
+            {
+                "chapter_range": "12+",
+                "notes": "Looks more worn. Sleeps less. Dark under eyes.",
+                "reason": "Accumulated stress and suspicion"
+            }
+        ]
+    },
+    "created_in_chapter": 1,
+    "last_appeared_chapter": 16,
+    "created_at": "2026-01-15T10:00:00Z",
+    "updated_at": "2026-01-16T18:00:00Z"
+}
